@@ -3,6 +3,16 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+.nb-gradle/
+
+
 # Package Files #
 *.jar
 *.war
