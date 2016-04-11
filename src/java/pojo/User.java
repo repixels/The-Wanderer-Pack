@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -20,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 @Entity
 @Table(name = "user")
@@ -49,11 +51,12 @@ public class User implements Serializable {
     @Column(name = "credit")
     private Integer credit;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "user_id")
     private Integer userId;
     @ManyToMany(mappedBy = "userList")
-    private List<UserOrder> userOrderList;
+    private List<UserOrder> order1List;
     @ManyToMany(mappedBy = "userList")
     private List<Interest> interestList;
     @ManyToMany(mappedBy = "userList")
@@ -122,12 +125,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<UserOrder> getUserOrderList() {
-        return userOrderList;
+    public List<UserOrder> getOrder1List() {
+        return order1List;
     }
 
-    public void setUserOrderList(List<UserOrder> userOrderList) {
-        this.userOrderList = userOrderList;
+    public void setOrder1List(List<UserOrder> order1List) {
+        this.order1List = order1List;
     }
 
     @XmlTransient

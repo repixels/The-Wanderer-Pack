@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 @Entity
 @Table(name = "product")
@@ -36,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "product_id")
     private Integer productId;
@@ -52,7 +55,7 @@ public class Product implements Serializable {
     @Column(name = "product_image")
     private String productImage;
     @ManyToMany(mappedBy = "productList")
-    private List<UserOrder> userOrderList;
+    private List<UserOrder> order1List;
     @ManyToMany(mappedBy = "productList")
     private List<Category> categoryList;
 
@@ -110,12 +113,12 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public List<UserOrder> getUserOrderList() {
-        return userOrderList;
+    public List<UserOrder> getOrder1List() {
+        return order1List;
     }
 
-    public void setUserOrderList(List<UserOrder> userOrderList) {
-        this.userOrderList = userOrderList;
+    public void setOrder1List(List<UserOrder> order1List) {
+        this.order1List = order1List;
     }
 
     @XmlTransient

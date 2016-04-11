@@ -6,7 +6,6 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -22,7 +21,7 @@ import pojo.Product;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 public class ProductJpaController implements Serializable {
 
@@ -35,9 +34,9 @@ public class ProductJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Product product) throws PreexistingEntityException, Exception {
-        if (product.getUserOrderList() == null) {
-            product.setUserOrderList(new ArrayList<UserOrder>());
+    public void create(Product product) {
+        if (product.getOrder1List() == null) {
+            product.setOrder1List(new ArrayList<UserOrder>());
         }
         if (product.getCategoryList() == null) {
             product.setCategoryList(new ArrayList<Category>());
@@ -46,12 +45,12 @@ public class ProductJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<UserOrder> attachedUserOrderList = new ArrayList<UserOrder>();
-            for (UserOrder userOrderListUserOrderToAttach : product.getUserOrderList()) {
-                userOrderListUserOrderToAttach = em.getReference(userOrderListUserOrderToAttach.getClass(), userOrderListUserOrderToAttach.getOrderId());
-                attachedUserOrderList.add(userOrderListUserOrderToAttach);
+            List<UserOrder> attachedOrder1List = new ArrayList<UserOrder>();
+            for (UserOrder order1ListUserOrderToAttach : product.getOrder1List()) {
+                order1ListUserOrderToAttach = em.getReference(order1ListUserOrderToAttach.getClass(), order1ListUserOrderToAttach.getOrderId());
+                attachedOrder1List.add(order1ListUserOrderToAttach);
             }
-            product.setUserOrderList(attachedUserOrderList);
+            product.setOrder1List(attachedOrder1List);
             List<Category> attachedCategoryList = new ArrayList<Category>();
             for (Category categoryListCategoryToAttach : product.getCategoryList()) {
                 categoryListCategoryToAttach = em.getReference(categoryListCategoryToAttach.getClass(), categoryListCategoryToAttach.getCategoryId());
@@ -59,21 +58,19 @@ public class ProductJpaController implements Serializable {
             }
             product.setCategoryList(attachedCategoryList);
             em.persist(product);
-            for (UserOrder userOrderListUserOrder : product.getUserOrderList()) {
-                userOrderListUserOrder.getProductList().add(product);
-                userOrderListUserOrder = em.merge(userOrderListUserOrder);
+            for (UserOrder order1ListUserOrder : product.getOrder1List()) {
+                order1ListUserOrder.getProductList().add(product);
+                order1ListUserOrder = em.merge(order1ListUserOrder);
             }
             for (Category categoryListCategory : product.getCategoryList()) {
                 categoryListCategory.getProductList().add(product);
                 categoryListCategory = em.merge(categoryListCategory);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findProduct(product.getProductId()) != null) {
-                throw new PreexistingEntityException("Product " + product + " already exists.", ex);
-            }
+        }catch(Exception ex){
             throw ex;
-        } finally {
+        } 
+        finally {
             if (em != null) {
                 em.close();
             }
@@ -86,17 +83,17 @@ public class ProductJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Product persistentProduct = em.find(Product.class, product.getProductId());
-            List<UserOrder> userOrderListOld = persistentProduct.getUserOrderList();
-            List<UserOrder> userOrderListNew = product.getUserOrderList();
+            List<UserOrder> order1ListOld = persistentProduct.getOrder1List();
+            List<UserOrder> order1ListNew = product.getOrder1List();
             List<Category> categoryListOld = persistentProduct.getCategoryList();
             List<Category> categoryListNew = product.getCategoryList();
-            List<UserOrder> attachedUserOrderListNew = new ArrayList<UserOrder>();
-            for (UserOrder userOrderListNewUserOrderToAttach : userOrderListNew) {
-                userOrderListNewUserOrderToAttach = em.getReference(userOrderListNewUserOrderToAttach.getClass(), userOrderListNewUserOrderToAttach.getOrderId());
-                attachedUserOrderListNew.add(userOrderListNewUserOrderToAttach);
+            List<UserOrder> attachedOrder1ListNew = new ArrayList<UserOrder>();
+            for (UserOrder order1ListNewUserOrderToAttach : order1ListNew) {
+                order1ListNewUserOrderToAttach = em.getReference(order1ListNewUserOrderToAttach.getClass(), order1ListNewUserOrderToAttach.getOrderId());
+                attachedOrder1ListNew.add(order1ListNewUserOrderToAttach);
             }
-            userOrderListNew = attachedUserOrderListNew;
-            product.setUserOrderList(userOrderListNew);
+            order1ListNew = attachedOrder1ListNew;
+            product.setOrder1List(order1ListNew);
             List<Category> attachedCategoryListNew = new ArrayList<Category>();
             for (Category categoryListNewCategoryToAttach : categoryListNew) {
                 categoryListNewCategoryToAttach = em.getReference(categoryListNewCategoryToAttach.getClass(), categoryListNewCategoryToAttach.getCategoryId());
@@ -105,16 +102,16 @@ public class ProductJpaController implements Serializable {
             categoryListNew = attachedCategoryListNew;
             product.setCategoryList(categoryListNew);
             product = em.merge(product);
-            for (UserOrder userOrderListOldUserOrder : userOrderListOld) {
-                if (!userOrderListNew.contains(userOrderListOldUserOrder)) {
-                    userOrderListOldUserOrder.getProductList().remove(product);
-                    userOrderListOldUserOrder = em.merge(userOrderListOldUserOrder);
+            for (UserOrder order1ListOldUserOrder : order1ListOld) {
+                if (!order1ListNew.contains(order1ListOldUserOrder)) {
+                    order1ListOldUserOrder.getProductList().remove(product);
+                    order1ListOldUserOrder = em.merge(order1ListOldUserOrder);
                 }
             }
-            for (UserOrder userOrderListNewUserOrder : userOrderListNew) {
-                if (!userOrderListOld.contains(userOrderListNewUserOrder)) {
-                    userOrderListNewUserOrder.getProductList().add(product);
-                    userOrderListNewUserOrder = em.merge(userOrderListNewUserOrder);
+            for (UserOrder order1ListNewUserOrder : order1ListNew) {
+                if (!order1ListOld.contains(order1ListNewUserOrder)) {
+                    order1ListNewUserOrder.getProductList().add(product);
+                    order1ListNewUserOrder = em.merge(order1ListNewUserOrder);
                 }
             }
             for (Category categoryListOldCategory : categoryListOld) {
@@ -158,10 +155,10 @@ public class ProductJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The product with id " + id + " no longer exists.", enfe);
             }
-            List<UserOrder> userOrderList = product.getUserOrderList();
-            for (UserOrder userOrderListUserOrder : userOrderList) {
-                userOrderListUserOrder.getProductList().remove(product);
-                userOrderListUserOrder = em.merge(userOrderListUserOrder);
+            List<UserOrder> order1List = product.getOrder1List();
+            for (UserOrder order1ListUserOrder : order1List) {
+                order1ListUserOrder.getProductList().remove(product);
+                order1ListUserOrder = em.merge(order1ListUserOrder);
             }
             List<Category> categoryList = product.getCategoryList();
             for (Category categoryListCategory : categoryList) {
