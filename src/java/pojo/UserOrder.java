@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mohammed
  */
 @Entity
-@Table(name = "order")
+@Table(name = "wandererpack_db.order")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UserOrder.findAll", query = "SELECT o FROM UserOrder o"),
@@ -48,7 +48,7 @@ public class UserOrder implements Serializable {
     private Integer orderId;
     @Basic(optional = false)
     @Column(name = "order_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date orderDate;
     @Basic(optional = false)
     @Column(name = "order_status")
