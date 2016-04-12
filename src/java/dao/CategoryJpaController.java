@@ -6,7 +6,6 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -21,7 +20,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 public class CategoryJpaController implements Serializable {
 
@@ -34,7 +33,7 @@ public class CategoryJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Category category) throws PreexistingEntityException, Exception {
+    public void create(Category category) {
         if (category.getProductList() == null) {
             category.setProductList(new ArrayList<Product>());
         }
@@ -81,11 +80,6 @@ public class CategoryJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findCategory(category.getCategoryId()) != null) {
-                throw new PreexistingEntityException("Category " + category + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

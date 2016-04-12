@@ -6,7 +6,6 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -23,7 +22,7 @@ import pojo.User;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 public class UserJpaController implements Serializable {
 
@@ -36,9 +35,9 @@ public class UserJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(User user) throws PreexistingEntityException, Exception {
-        if (user.getUserOrderList() == null) {
-            user.setUserOrderList(new ArrayList<UserOrder>());
+    public void create(User user) {
+        if (user.getOrder1List() == null) {
+            user.setOrder1List(new ArrayList<UserOrder>());
         }
         if (user.getInterestList() == null) {
             user.setInterestList(new ArrayList<Interest>());
@@ -50,12 +49,12 @@ public class UserJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<UserOrder> attachedUserOrderList = new ArrayList<UserOrder>();
-            for (UserOrder userOrderListUserOrderToAttach : user.getUserOrderList()) {
-                userOrderListUserOrderToAttach = em.getReference(userOrderListUserOrderToAttach.getClass(), userOrderListUserOrderToAttach.getOrderId());
-                attachedUserOrderList.add(userOrderListUserOrderToAttach);
+            List<UserOrder> attachedOrder1List = new ArrayList<UserOrder>();
+            for (UserOrder order1ListUserOrderToAttach : user.getOrder1List()) {
+                order1ListUserOrderToAttach = em.getReference(order1ListUserOrderToAttach.getClass(), order1ListUserOrderToAttach.getOrderId());
+                attachedOrder1List.add(order1ListUserOrderToAttach);
             }
-            user.setUserOrderList(attachedUserOrderList);
+            user.setOrder1List(attachedOrder1List);
             List<Interest> attachedInterestList = new ArrayList<Interest>();
             for (Interest interestListInterestToAttach : user.getInterestList()) {
                 interestListInterestToAttach = em.getReference(interestListInterestToAttach.getClass(), interestListInterestToAttach.getInterestId());
@@ -69,9 +68,9 @@ public class UserJpaController implements Serializable {
             }
             user.setAddressList(attachedAddressList);
             em.persist(user);
-            for (UserOrder userOrderListUserOrder : user.getUserOrderList()) {
-                userOrderListUserOrder.getUserList().add(user);
-                userOrderListUserOrder = em.merge(userOrderListUserOrder);
+            for (UserOrder order1ListUserOrder : user.getOrder1List()) {
+                order1ListUserOrder.getUserList().add(user);
+                order1ListUserOrder = em.merge(order1ListUserOrder);
             }
             for (Interest interestListInterest : user.getInterestList()) {
                 interestListInterest.getUserList().add(user);
@@ -82,11 +81,6 @@ public class UserJpaController implements Serializable {
                 addressListAddress = em.merge(addressListAddress);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findUser(user.getUserId()) != null) {
-                throw new PreexistingEntityException("User " + user + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -100,19 +94,19 @@ public class UserJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             User persistentUser = em.find(User.class, user.getUserId());
-            List<UserOrder> userOrderListOld = persistentUser.getUserOrderList();
-            List<UserOrder> userOrderListNew = user.getUserOrderList();
+            List<UserOrder> order1ListOld = persistentUser.getOrder1List();
+            List<UserOrder> order1ListNew = user.getOrder1List();
             List<Interest> interestListOld = persistentUser.getInterestList();
             List<Interest> interestListNew = user.getInterestList();
             List<Address> addressListOld = persistentUser.getAddressList();
             List<Address> addressListNew = user.getAddressList();
-            List<UserOrder> attachedUserOrderListNew = new ArrayList<UserOrder>();
-            for (UserOrder userOrderListNewUserOrderToAttach : userOrderListNew) {
-                userOrderListNewUserOrderToAttach = em.getReference(userOrderListNewUserOrderToAttach.getClass(), userOrderListNewUserOrderToAttach.getOrderId());
-                attachedUserOrderListNew.add(userOrderListNewUserOrderToAttach);
+            List<UserOrder> attachedOrder1ListNew = new ArrayList<UserOrder>();
+            for (UserOrder order1ListNewUserOrderToAttach : order1ListNew) {
+                order1ListNewUserOrderToAttach = em.getReference(order1ListNewUserOrderToAttach.getClass(), order1ListNewUserOrderToAttach.getOrderId());
+                attachedOrder1ListNew.add(order1ListNewUserOrderToAttach);
             }
-            userOrderListNew = attachedUserOrderListNew;
-            user.setUserOrderList(userOrderListNew);
+            order1ListNew = attachedOrder1ListNew;
+            user.setOrder1List(order1ListNew);
             List<Interest> attachedInterestListNew = new ArrayList<Interest>();
             for (Interest interestListNewInterestToAttach : interestListNew) {
                 interestListNewInterestToAttach = em.getReference(interestListNewInterestToAttach.getClass(), interestListNewInterestToAttach.getInterestId());
@@ -128,16 +122,16 @@ public class UserJpaController implements Serializable {
             addressListNew = attachedAddressListNew;
             user.setAddressList(addressListNew);
             user = em.merge(user);
-            for (UserOrder userOrderListOldUserOrder : userOrderListOld) {
-                if (!userOrderListNew.contains(userOrderListOldUserOrder)) {
-                    userOrderListOldUserOrder.getUserList().remove(user);
-                    userOrderListOldUserOrder = em.merge(userOrderListOldUserOrder);
+            for (UserOrder order1ListOldUserOrder : order1ListOld) {
+                if (!order1ListNew.contains(order1ListOldUserOrder)) {
+                    order1ListOldUserOrder.getUserList().remove(user);
+                    order1ListOldUserOrder = em.merge(order1ListOldUserOrder);
                 }
             }
-            for (UserOrder userOrderListNewUserOrder : userOrderListNew) {
-                if (!userOrderListOld.contains(userOrderListNewUserOrder)) {
-                    userOrderListNewUserOrder.getUserList().add(user);
-                    userOrderListNewUserOrder = em.merge(userOrderListNewUserOrder);
+            for (UserOrder order1ListNewUserOrder : order1ListNew) {
+                if (!order1ListOld.contains(order1ListNewUserOrder)) {
+                    order1ListNewUserOrder.getUserList().add(user);
+                    order1ListNewUserOrder = em.merge(order1ListNewUserOrder);
                 }
             }
             for (Interest interestListOldInterest : interestListOld) {
@@ -193,10 +187,10 @@ public class UserJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The user with id " + id + " no longer exists.", enfe);
             }
-            List<UserOrder> userOrderList = user.getUserOrderList();
-            for (UserOrder userOrderListUserOrder : userOrderList) {
-                userOrderListUserOrder.getUserList().remove(user);
-                userOrderListUserOrder = em.merge(userOrderListUserOrder);
+            List<UserOrder> order1List = user.getOrder1List();
+            for (UserOrder order1ListUserOrder : order1List) {
+                order1ListUserOrder.getUserList().remove(user);
+                order1ListUserOrder = em.merge(order1ListUserOrder);
             }
             List<Interest> interestList = user.getInterestList();
             for (Interest interestListInterest : interestList) {

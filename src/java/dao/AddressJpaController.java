@@ -6,7 +6,6 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -21,7 +20,7 @@ import pojo.Address;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 public class AddressJpaController implements Serializable {
 
@@ -34,7 +33,7 @@ public class AddressJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Address address) throws PreexistingEntityException, Exception {
+    public void create(Address address) {
         if (address.getUserList() == null) {
             address.setUserList(new ArrayList<User>());
         }
@@ -54,11 +53,6 @@ public class AddressJpaController implements Serializable {
                 userListUser = em.merge(userListUser);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findAddress(address.getAddressId()) != null) {
-                throw new PreexistingEntityException("Address " + address + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

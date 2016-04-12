@@ -8,6 +8,7 @@
     <class>pojo.Category</class>
     <class>pojo.Product</class>
     <class>pojo.UserOrder</class>
+    <class>pojo.UserOrder</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/wandererpack_db?zeroDateTimeBehavior=convertToNull"/>

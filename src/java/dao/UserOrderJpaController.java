@@ -6,7 +6,6 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -22,7 +21,7 @@ import pojo.UserOrder;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 public class UserOrderJpaController implements Serializable {
 
@@ -35,7 +34,7 @@ public class UserOrderJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(UserOrder userOrder) throws PreexistingEntityException, Exception {
+    public void create(UserOrder userOrder) {
         if (userOrder.getUserList() == null) {
             userOrder.setUserList(new ArrayList<User>());
         }
@@ -60,19 +59,14 @@ public class UserOrderJpaController implements Serializable {
             userOrder.setProductList(attachedProductList);
             em.persist(userOrder);
             for (User userListUser : userOrder.getUserList()) {
-                userListUser.getUserOrderList().add(userOrder);
+                userListUser.getOrder1List().add(userOrder);
                 userListUser = em.merge(userListUser);
             }
             for (Product productListProduct : userOrder.getProductList()) {
-                productListProduct.getUserOrderList().add(userOrder);
+                productListProduct.getOrder1List().add(userOrder);
                 productListProduct = em.merge(productListProduct);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findUserOrder(userOrder.getOrderId()) != null) {
-                throw new PreexistingEntityException("UserOrder " + userOrder + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -107,25 +101,25 @@ public class UserOrderJpaController implements Serializable {
             userOrder = em.merge(userOrder);
             for (User userListOldUser : userListOld) {
                 if (!userListNew.contains(userListOldUser)) {
-                    userListOldUser.getUserOrderList().remove(userOrder);
+                    userListOldUser.getOrder1List().remove(userOrder);
                     userListOldUser = em.merge(userListOldUser);
                 }
             }
             for (User userListNewUser : userListNew) {
                 if (!userListOld.contains(userListNewUser)) {
-                    userListNewUser.getUserOrderList().add(userOrder);
+                    userListNewUser.getOrder1List().add(userOrder);
                     userListNewUser = em.merge(userListNewUser);
                 }
             }
             for (Product productListOldProduct : productListOld) {
                 if (!productListNew.contains(productListOldProduct)) {
-                    productListOldProduct.getUserOrderList().remove(userOrder);
+                    productListOldProduct.getOrder1List().remove(userOrder);
                     productListOldProduct = em.merge(productListOldProduct);
                 }
             }
             for (Product productListNewProduct : productListNew) {
                 if (!productListOld.contains(productListNewProduct)) {
-                    productListNewProduct.getUserOrderList().add(userOrder);
+                    productListNewProduct.getOrder1List().add(userOrder);
                     productListNewProduct = em.merge(productListNewProduct);
                 }
             }
@@ -160,12 +154,12 @@ public class UserOrderJpaController implements Serializable {
             }
             List<User> userList = userOrder.getUserList();
             for (User userListUser : userList) {
-                userListUser.getUserOrderList().remove(userOrder);
+                userListUser.getOrder1List().remove(userOrder);
                 userListUser = em.merge(userListUser);
             }
             List<Product> productList = userOrder.getProductList();
             for (Product productListProduct : productList) {
-                productListProduct.getUserOrderList().remove(userOrder);
+                productListProduct.getOrder1List().remove(userOrder);
                 productListProduct = em.merge(productListProduct);
             }
             em.remove(userOrder);

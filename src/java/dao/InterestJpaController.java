@@ -6,7 +6,6 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -21,7 +20,7 @@ import pojo.Interest;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 public class InterestJpaController implements Serializable {
 
@@ -34,7 +33,7 @@ public class InterestJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Interest interest) throws PreexistingEntityException, Exception {
+    public void create(Interest interest) {
         if (interest.getUserList() == null) {
             interest.setUserList(new ArrayList<User>());
         }
@@ -54,11 +53,6 @@ public class InterestJpaController implements Serializable {
                 userListUser = em.merge(userListUser);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findInterest(interest.getInterestId()) != null) {
-                throw new PreexistingEntityException("Interest " + interest + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,26 +28,27 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ehab
+ * @author Mohammed
  */
 @Entity
-@Table(name = "order")
+@Table(name = "wandererpack_db.order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserOrder.findAll", query = "SELECT u FROM UserOrder u"),
-    @NamedQuery(name = "UserOrder.findByOrderId", query = "SELECT u FROM UserOrder u WHERE u.orderId = :orderId"),
-    @NamedQuery(name = "UserOrder.findByOrderDate", query = "SELECT u FROM UserOrder u WHERE u.orderDate = :orderDate"),
-    @NamedQuery(name = "UserOrder.findByOrderStatus", query = "SELECT u FROM UserOrder u WHERE u.orderStatus = :orderStatus"),
-    @NamedQuery(name = "UserOrder.findByOrderAmount", query = "SELECT u FROM UserOrder u WHERE u.orderAmount = :orderAmount")})
+    @NamedQuery(name = "UserOrder.findAll", query = "SELECT o FROM UserOrder o"),
+    @NamedQuery(name = "UserOrder.findByOrderId", query = "SELECT o FROM UserOrder o WHERE o.orderId = :orderId"),
+    @NamedQuery(name = "UserOrder.findByOrderDate", query = "SELECT o FROM UserOrder o WHERE o.orderDate = :orderDate"),
+    @NamedQuery(name = "UserOrder.findByOrderStatus", query = "SELECT o FROM UserOrder o WHERE o.orderStatus = :orderStatus"),
+    @NamedQuery(name = "UserOrder.findByOrderAmount", query = "SELECT o FROM UserOrder o WHERE o.orderAmount = :orderAmount")})
 public class UserOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "order_id")
     private Integer orderId;
     @Basic(optional = false)
     @Column(name = "order_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date orderDate;
     @Basic(optional = false)
     @Column(name = "order_status")
@@ -151,7 +154,7 @@ public class UserOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "pojo.UserOrder[ orderId=" + orderId + " ]";
+        return "pojo.Order1[ orderId=" + orderId + " ]";
     }
     
 }
