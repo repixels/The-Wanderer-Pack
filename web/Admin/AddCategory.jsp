@@ -15,26 +15,30 @@
     <body>
         <h1>Hello World!</h1>
         
-    <c:set var="isEdit" value="Add"/>
+    <c:set var="isEdit" value="${requestScope.categoryMode}"/>
+
     
     <c:if test="${requestScope.category!=null}">not null
         
-        <c:set var="isEdit" value="Edit"/>
+        <c:set var="isEdit" value="update"/>
         <jsp:useBean id="category" class="pojo.Category" scope="request"/>
         <jsp:setProperty name="category" property="categorName" value="${requestScope.category.categorName}"/>
         <jsp:setProperty name="category" property="categoryDescription" value="${requestScope.category.categoryDescription}"/>
         <jsp:setProperty name="category" property="categoryImage" value="${requestScope.category.categoryImage}"/>
         <jsp:setProperty name="category" property="categoryId" value="${requestScope.category.categoryId}"/>
     </c:if>
+    <c:if test="${requestScope.category==null}">
+        <c:set var="isEdit" value="insert"/>
+    </c:if>
     
-    
+  ${pageScope.isEdit}  
     
         <form action="Category" enctype="MULTIPART/FORM-DATA" method="Post">
             
-            <label >category id : ${category.categoryId}</label>
+            <input type="text" name="categoryId" hidden="true" value="${category.categoryId}" />
             <br/>
-            <input name="insertOrEditOrView" hidden="true"value="insert"/>
-            <!--<input name="isEdit" hidden="true"value="${pageScope.isEdit}"/>-->
+            <input name="categoryMode" hidden="true"value="${pageScope.isEdit}"/>
+<!--            <input name="isEdit" hidden="true"value="${pageScope.isEdit}"/>-->
             <label >category Name : </label>
             <input type="text" name="categorName"value="${category.categorName}"/>
             <br/> 
