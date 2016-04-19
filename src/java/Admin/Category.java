@@ -58,11 +58,11 @@ public class Category extends HttpServlet {
                 createNewCategory(request, response);
             } else if (categoryMode.equals("edit")) {
                 int id = Integer.parseInt(request.getParameter("id"));
-                editCategory(request, response,id);
+                showEditPage(request, response,id);
                 
                 out.print(categoryMode);
             } else if (categoryMode.equals("update")) {
-                updateCategory(out, categoryMode, request);
+                updateCategory(out, request);
             } else if (categoryMode.equals("delete")) {
                 out.print(categoryMode);
                 int id = Integer.parseInt(request.getParameter("id"));
@@ -78,8 +78,8 @@ public class Category extends HttpServlet {
 
     }
 
-    public void updateCategory(PrintWriter out, String categoryMode, HttpServletRequest request) throws IOException, ServletException, NumberFormatException {
-        out.print(categoryMode);
+    public void updateCategory(PrintWriter out, HttpServletRequest request) throws IOException, ServletException, NumberFormatException {
+        
 
         pojo.Category category = populateCategory(request);
         int id = Integer.parseInt(request.getParameter("categoryId"));
@@ -119,7 +119,7 @@ public class Category extends HttpServlet {
         //</editor-fold>
         //  <editor-fold defaultstate="collapsed" desc="create new category ">
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-        EntityManager em = emf.createEntityManager();
+      
         CategoryJpaController categoryController = new CategoryJpaController(emf);
 
         //create new category
@@ -202,7 +202,7 @@ public class Category extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void editCategory(HttpServletRequest request, HttpServletResponse response,int id) throws IOException, ServletException {
+    private void showEditPage(HttpServletRequest request, HttpServletResponse response,int id) throws IOException, ServletException {
 
         //  <editor-fold defaultstate="collapsed" desc="create new category ">
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");

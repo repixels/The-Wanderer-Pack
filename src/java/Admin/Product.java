@@ -7,6 +7,7 @@ package Admin;
 
 import dao.CategoryJpaController;
 import dao.ProductJpaController;
+import dao.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -48,6 +49,8 @@ public class Product extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String productMode = request.getParameter("productMode");
+        PrintWriter out = response.getWriter();
+        
         if (productMode != null) {
             if (productMode.equals("add")) {
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
@@ -56,9 +59,33 @@ public class Product extends HttpServlet {
                 request.getRequestDispatcher("AddProduct.jsp").forward(request, response);
             } else if (productMode.equals("insert")) {
                 insert(request, response);
+            }else if (productMode.equals("showAll")){
+            
+                showAll(request,response);
+            }
+            else if (productMode.equals("edit")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                showEditPage(request, response,id);
+                
+                
+            }
+            else if (productMode.equals("update")) {
+                updateProduct( request,response);
+            } 
+            else if (productMode.equals("delete")) {
+                
+                int id = Integer.parseInt(request.getParameter("id"));
+                delete(request,response,id);
+                
+                
+            }
+            else{
+            response.getWriter().print(productMode);
             }
         }
 
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -101,49 +128,138 @@ public class Product extends HttpServlet {
     }// </editor-fold>
 
     private void insert(HttpServletRequest request, HttpServletResponse response) {
-        String name = request.getParameter("productName");
+//        String name = request.getParameter("productName");
+//        String desc = request.getParameter("productDescription");
+//        BigDecimal price = new BigDecimal(request.getParameter("productPrice"));
+//         String cat=request.getParameter("categories");
+//         
+//         pojo.Product product=new pojo.Product();
+//         product.setProductName(name);
+//         product.setProductDescription(desc);
+//         product.setProductPrice(price);
+//        List<pojo.Category> categories=new ArrayList<>();
+//        
+        
+//        EntityManager em = emf.createEntityManager();
+//        Query query = em.createNamedQuery("Category.findByCategorName");
+//        query.setParameter("categorName", cat);
+//        pojo.Category category=(pojo.Category) query.getSingleResult();
+//         categories.add(category);
+//         product.setCategoryList(categories);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+        pojo.Product product = populateProduct(request);
+        ProductJpaController controller=new ProductJpaController(emf);
+        controller.create(product);
+
+    }
+
+    private void showAll(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PrintWriter out;
+//        try (PrintWriter out= response.getWriter()){
+//            try{
+//            out= response.getWriter();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
+            ProductJpaController controller=new ProductJpaController(emf);
+//            for (pojo.Product product : controller.findProductEntities()) {
+//                product.getCategoryList();
+//            }
+            request.setAttribute("allProducts", controller.findProductEntities());
+            request.getRequestDispatcher("ShowAllProducts.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+
+    private void showEditPage(HttpServletRequest request, HttpServletResponse response, int id) {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
+            ProductJpaController prController = new ProductJpaController(emf);
+            
+            //create new category
+            pojo.Product product = prController.findProduct(id);
+            request.setAttribute("product", product);
+            
+            CategoryJpaController catController = new CategoryJpaController(emf);
+                request.setAttribute("allCategories", catController.findCategoryEntities());
+                
+            request.getRequestDispatcher("AddProduct.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
+
+    private void updateProduct( HttpServletRequest request, HttpServletResponse response) {
+              pojo.Product product = populateProduct(request);
+        int id = Integer.parseInt(request.getParameter("productId"));
+
+        product.setProductId(id);
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+        EntityManager em = emf.createEntityManager();
+        ProductJpaController controller = new ProductJpaController(emf);
+        
+        try {
+            //to ne replaced with real data from user
+
+//            product.setCategoryList(new ArrayList<>());
+
+            controller.edit(product);
+            showAll(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        
+        
+
+    }
+
+    private pojo.Product populateProduct(HttpServletRequest request) {
+         String name = request.getParameter("productName");
         String desc = request.getParameter("productDescription");
         BigDecimal price = new BigDecimal(request.getParameter("productPrice"));
          String cat=request.getParameter("categories");
+         
+         
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Category.findByCategorName");
+        query.setParameter("categorName", cat);
+        pojo.Category category=(pojo.Category) query.getSingleResult();
+        List<pojo.Category> categories=new ArrayList<>();
+         categories.add(category);
+         
          
          pojo.Product product=new pojo.Product();
          product.setProductName(name);
          product.setProductDescription(desc);
          product.setProductPrice(price);
-        List<pojo.Category> categories=new ArrayList<>();
-        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-        EntityManager em = emf.createEntityManager();
-        Query query = em.createNamedQuery("Category.findByCategorName");
-        query.setParameter("categorName", cat);
-        pojo.Category category=(pojo.Category) query.getSingleResult();
-         categories.add(category);
          product.setCategoryList(categories);
+         return product;
         
-        ProductJpaController controller=new ProductJpaController(emf);
-        controller.create(product);
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Category</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Category at " + request.getContextPath() + "</h1>");
-            out.println("<h1> name :" + name +  "  is created</h1>");
-            
-//            out.println("<h1> products :"+category.get+"</h1>");
-//            out.println("<h1> subCat :"+subCat+"</h1>");
-//            
+    }
 
-            out.println("</body>");
-            out.println("</html>");
-        } catch (IOException ex) {
+    private void delete(HttpServletRequest request, HttpServletResponse response, int id) {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            ProductJpaController controller =new ProductJpaController(emf);
+            controller.destroy(id);
+            showAll(request, response);
+        } catch (NonexistentEntityException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
 }
