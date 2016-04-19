@@ -10,8 +10,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,7 +67,7 @@ public class UserOrder implements Serializable {
     @JoinTable(name = "order_has_product", joinColumns = {
         @JoinColumn(name = "order_id", referencedColumnName = "order_id")}, inverseJoinColumns = {
         @JoinColumn(name = "product_id", referencedColumnName = "product_id")})
-    @ManyToMany
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Product> productList;
 
     public UserOrder() {

@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,9 +56,9 @@ public class Product implements Serializable {
     private BigDecimal productPrice;
     @Column(name = "product_image")
     private String productImage;
-    @ManyToMany(mappedBy = "productList")
+    @ManyToMany(mappedBy = "productList", cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<UserOrder> order1List;
-    @ManyToMany(mappedBy = "productList")
+    @ManyToMany(mappedBy = "productList" ,cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)//(cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
     private List<Category> categoryList;
 
     public Product() {
