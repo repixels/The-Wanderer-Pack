@@ -34,7 +34,7 @@
                             <div class="mid-1">
                                 <div class="women">
                                     <div class="women-top">
-                                        <span>cat</span>
+                                        <span name="name">cat</span>
                                         <h6><a href="single.jsp">description</a></h6>
                                     </div>
                                     <div class="img item_add">
@@ -43,7 +43,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="mid-2">
-                                    <p ><label>old</label><em class="item_price">new price</em></p>
+                                    <p ><label name="price" id="price">old</label><em class="item_price">new price</em></p>
                                     <div class="block">
                                         <div class="starbox small ghosting"> </div>
                                     </div>
