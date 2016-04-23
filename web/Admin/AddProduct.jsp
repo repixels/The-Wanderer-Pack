@@ -39,7 +39,7 @@
             <input name="productMode" hidden="true"value="${pageScope.isEdit}"/>
 <!--            <input name="isEdit" hidden="true"value="${pageScope.isEdit}"/>-->
             <label >product Name : </label>
-            <input type="text" name="productName"value="${product.productName}"/>
+            <input type="text" name="productName" value="${product.productName}"/>
             <br/> 
             
             <label >product Description </label>
