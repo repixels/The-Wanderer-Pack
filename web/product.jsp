@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <!--header-->
@@ -31,27 +32,32 @@
                                     <a href="single.jsp"><i class="glyphicon glyphicon-menu-right icon"></i></a>
                                 </div>
                             </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span name="name">cat</span>
-                                        <h6><a href="single.jsp">description</a></h6>
-                                    </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p ><label name="price" id="price">old</label><em class="item_price">new price</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"> </div>
-                                    </div>
 
-                                    <div class="clearfix"></div>
-                                </div>
 
-                            </div>
+
+                            <c:forEach  var="product" items="${requestScope.Products}" >
+                                <div class="mid-1">
+                                    <div class="women">
+                                        <div class="women-top">
+                                            <span name="name">
+                                                <c:out value="${product.productName}"/>
+                                            </span>
+                                            <h6><a href="single.jsp"><c:out value="${product.productDescription}"/></a></h6>
+                                        </div>
+                                        <div class="img item_add">
+                                            <a href="#"><img src="images/ca.png" alt=""></a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="mid-2">
+                                        <p ><em class="item_price"><c:out value="${product.productPrice}"/></em></p>
+                                        <div class="block">
+                                            <div class="starbox small ghosting"> </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="clearfix"></div>
