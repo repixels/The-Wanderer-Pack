@@ -30,13 +30,13 @@
         </li>
         <li class="xn-title">Navigation</li>
         <li>
-            <a href="index.html"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+            <a href="index.jsp"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
         </li>
         <li class="active">
-            <a href="products.html"><span class="fa fa-desktop"></span> <span class="xn-text">Products</span></a>
+            <a href="Product?productMode=showAll"><span class="fa fa-desktop"></span> <span class="xn-text">Products</span></a>
         </li>
         <li>
-            <a href="categories.html"><span class="fa fa-desktop"></span> <span class="xn-text">Category</span></a>
+            <a href="Category?categoryMode=showAll"><span class="fa fa-desktop"></span> <span class="xn-text">Category</span></a>
         </li>
     </ul>
     <!-- END X-NAVIGATION -->

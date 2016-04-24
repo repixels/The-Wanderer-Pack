@@ -203,13 +203,13 @@ public class Product extends HttpServlet {
          String name = request.getParameter("productName");
         String desc = request.getParameter("productDescription");
         BigDecimal price = new BigDecimal(request.getParameter("productPrice"));
-         String cat=request.getParameter("categories");
+         int cat= new Integer(request.getParameter("categories"));
          
          
          EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
         EntityManager em = emf.createEntityManager();
-        Query query = em.createNamedQuery("Category.findByCategorName");
-        query.setParameter("categorName", cat);
+        Query query = em.createNamedQuery("Category.findByCategoryId");
+        query.setParameter("categoryId", cat);
         pojo.Category category=(pojo.Category) query.getSingleResult();
         List<pojo.Category> categories=new ArrayList<>();
          categories.add(category);

@@ -1,5 +1,5 @@
 
-    function delete_row(row,productId){
+    function delete_row(row,itemType,itemId){
         
         var box = $("#mb-remove-row");
         box.addClass("open");
@@ -8,7 +8,12 @@
             box.removeClass("open");
             $("#"+row).hide("slow",function(){
                 $(this).remove();
-                document.location = "Product?productMode=delete&id="+productId;
+                if(itemType === 'product')
+                    document.location = "Product?productMode=delete&id="+itemId;
+                else if(itemType === 'category')
+                {
+                    document.location = "Category?categoryMode=delete&id="+itemId;
+                }
             });
         });
         

@@ -43,7 +43,7 @@
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb push-down-0">
                     <li><a href="#">Home</a></li>
-                    <li class="active">Products</li>
+                    <li class="active">Categories</li>
                 </ul>
                 <!-- END BREADCRUMB -->                
                 
@@ -55,9 +55,9 @@
                             <div class="panel panel-default">
 
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Products</h3>
+                                    <h3 class="panel-title">Categories</h3>
                                     <ul class="panel-controls">
-                                        <li><a href="Product?productMode=add"><span class="fa fa-plus"></span></a></li>
+                                        <li><a href="add-category.jsp"><span class="fa fa-plus"></span></a></li>
                                     </ul>
                                 </div>
 
@@ -68,30 +68,20 @@
                                             <thead>
                                                 <tr>
                                                     <th width="50">id</th>
-                                                    <th>name</th>
-                                                    <th width="100">category</th>
-                                                    <th width="100">description</th>
-                                                    <th width="100">price</th>
-                                                    <th width="100">actions</th>
+                                                    <th width="200">name</th>
+                                                    <th >description</th>
+                                                    <th width="150">actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach  var="product"   items="${requestScope.allProducts}" >
-                                                <tr id="trow_${product.productId}">
-                                                    <td class="text-center"><c:out value="${product.productId}"/></td>
-                                                    <td><strong><c:out value="${product.productName}"/></strong></td>
+                                                <c:forEach  var="cat" items="${requestScope.allCategories}">
+                                                <tr id="trow_${cat.categoryId}">
+                                                    <td class="text-center"><c:out value="${cat.categoryId}"/></td>
+                                                    <td><strong><c:out value="${cat.categorName}"/></strong></td>
+                                                    <td><c:out value="${cat.categoryDescription}"/></td>
                                                     <td>
-                                                        <span class="label label-success">
-                                                            <c:if test="${product.categoryList.size()>0}">
-                                                                <c:out value="${product.categoryList.get(0).categorName}"/>
-                                                            </c:if>
-                                                        </span>
-                                                    </td>
-                                                    <td><c:out value="${product.productDescription}"/></td>
-                                                    <td><c:out value="${product.productPrice}"/> EGP</td>
-                                                    <td>
-                                                        <button class="btn btn-default btn-rounded btn-sm"><a href="Product?productMode=edit&id=${product.productId}"><span class="fa fa-pencil"></span></a></button>
-                                                        <button class="btn btn-danger btn-rounded btn-sm" onClick="delete_row('trow_${product.productId}','product',${product.productId}+'');"><span class="fa fa-times"></span></button>
+                                                        <button class="btn btn-default btn-rounded btn-sm"><a href="Category?categoryMode=edit&id=${cat.categoryId}"><span class="fa fa-pencil"></span></a></button>
+                                                        <button class="btn btn-danger btn-rounded btn-sm" onClick="delete_row('trow_${pcat.categoryId}','category',${cat.categoryId}+'');"><span class="fa fa-times"></span></button>
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
