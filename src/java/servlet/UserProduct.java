@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author OMIMA
  */
 @WebServlet(name = "UserProduct", urlPatterns = {"/UserProduct"})
-public class Product extends HttpServlet {
+public class UserProduct extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
