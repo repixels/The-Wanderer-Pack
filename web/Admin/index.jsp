@@ -138,7 +138,7 @@
         
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-        
+        <script type='text/javascript' src='js/SearchProduct.js'></script>
        
         <!-- END PAGE PLUGINS -->
         

@@ -7,35 +7,42 @@
 function searchProducts()
 {
     var productName = document.getElementById("searchInput").value;
-
-$.get("Product?productMode=search&name="+ productName,searchHandle);
+    if(productName.length > 0)
+    {
+        $.get("Product?productMode=search&name="+ productName,searchHandle);
+    }
+    else
+    {
+        var resultsUL = document.getElementById("searchResults");
+        resultsUL.innerHTML = "";
+        resultsUL.style.display = "none";
+    }
 }
 
 function searchHandle(responseTxt, statusTxt, xhr){
      if (statusTxt === "success") {
         var result = JSON.parse(responseTxt);
         printHref(result);
-//           for (i = 0; i < result.length; i++) {
-//            alert(result[i]);
-//
-//        }
-         
-     }
-    
+     }   
 }
 
 function printHref(result){
-    var hrefDiv=document.getElementById("searchHrefDiv");
-    hrefDiv.innerHTML="";
-    for (i = 0; i < result.length; i++) {
-        var a = document.createElement('a');
-        
-        var productName = document.createTextNode(result[i][1]);
-        a.appendChild(productName);
-        a.href="Product?productMode=edit&id="+result[i][0];
-
-        hrefDiv.appendChild(a);
-         var br = document.createElement("br");
-        hrefDiv.appendChild(br); 
+    var resultsUL = document.getElementById("searchResults");
+    resultsUL.innerHTML = "";
+    if(result.length > 0)
+    {
+        resultsUL.style.display = "block";
+        for (i = 0; i < result.length; i++)
+        {
+            var listItem = document.createElement("li");
+            var listItemRefrence = document.createElement("a");
+            var productName = document.createTextNode(result[i][1]);
+            
+            listItemRefrence.appendChild(productName);
+            listItemRefrence.href="Product?productMode=edit&id="+result[i][0];
+            
+            listItem.appendChild(listItemRefrence);
+            resultsUL.appendChild(listItem);
         }
+    }
 }

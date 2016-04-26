@@ -7,10 +7,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
+
 <li class="xn-search">
     <form role="form">
-        <input  id="searchInput" type="text" name="search" placeholder="Search..." onkeyup="searchProducts()"/>
+        <input  id="searchInput" type="text" class="search" name="search" placeholder="Search..." onkeyup="searchProducts()"/>
+        <ul id="searchResults" style="    display: none;
+                                            color: white;
+                                            background-color: black;                                            
+                                            width: 200px;
+                                            margin-top: 1px;
+                                            opacity: 0.9;
+            ">
+        </ul>
     </form>
 </li>   
 
- <script type='text/javascript' src='js/SearchProduct.js'></script>        
+   
