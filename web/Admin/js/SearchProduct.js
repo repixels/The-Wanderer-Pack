@@ -46,3 +46,14 @@ function printHref(result){
         }
     }
 }
+
+function hideResults()
+{
+    $( "#searchResults" ).fadeOut( "fast", function (){
+       var resultsUL = document.getElementById("searchResults");
+    resultsUL.innerHTML = "";
+    resultsUL.style.display = "none";
+    document.getElementById("searchInput").value = ""; 
+    });
+    
+}

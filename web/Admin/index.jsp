@@ -98,14 +98,7 @@
                                 <div class="widget-big-int plugin-clock">00:00</div>                            
                                 <div class="widget-subtitle plugin-date">Loading...</div>
                             </div>                        
-                            <!-- END WIDGET CLOCK -->
-                            
-                            <div class="widget widget-info widget-padding-sm">
-                                <div class="widget-big-int plugin-clock" id="searchHrefDiv" >
-                                    
-                                </div>                            
-                                
-                            </div>                        
+                            <!-- END WIDGET CLOCK -->                     
                             
                         </div>
                     </div>
@@ -138,7 +131,7 @@
         
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-        <script type='text/javascript' src='js/SearchProduct.js'></script>
+        
        
         <!-- END PAGE PLUGINS -->
         

@@ -10,7 +10,7 @@
 
 <li class="xn-search">
     <form role="form">
-        <input  id="searchInput" type="text" class="search" name="search" placeholder="Search..." onkeyup="searchProducts()"/>
+        <input  id="searchInput" type="text" class="search" name="search" placeholder="Search..." onkeyup="searchProducts()" onblur="setTimeout(hideResults, 100)"/>
         <ul id="searchResults" style="    display: none;
                                             color: white;
                                             background-color: black;                                            
