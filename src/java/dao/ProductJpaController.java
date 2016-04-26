@@ -87,13 +87,18 @@ public class ProductJpaController implements Serializable {
             List<UserOrder> order1ListNew = product.getOrder1List();
             List<Category> categoryListOld = persistentProduct.getCategoryList();
             List<Category> categoryListNew = product.getCategoryList();
-            List<UserOrder> attachedOrder1ListNew = new ArrayList<UserOrder>();
-            for (UserOrder order1ListNewUserOrderToAttach : order1ListNew) {
-                order1ListNewUserOrderToAttach = em.getReference(order1ListNewUserOrderToAttach.getClass(), order1ListNewUserOrderToAttach.getOrderId());
-                attachedOrder1ListNew.add(order1ListNewUserOrderToAttach);
+            if(order1ListNew!=null&&order1ListNew.size()>0){
+                List<UserOrder> attachedOrder1ListNew = new ArrayList<UserOrder>();
+                for (UserOrder order1ListNewUserOrderToAttach : order1ListNew) {
+                    order1ListNewUserOrderToAttach = em.getReference(order1ListNewUserOrderToAttach.getClass(), order1ListNewUserOrderToAttach.getOrderId());
+                    attachedOrder1ListNew.add(order1ListNewUserOrderToAttach);
+                }
+                order1ListNew = attachedOrder1ListNew;
+                product.setOrder1List(order1ListNew);
             }
-            order1ListNew = attachedOrder1ListNew;
-            product.setOrder1List(order1ListNew);
+            else{
+            order1ListNew=new ArrayList<UserOrder>();
+            }
             List<Category> attachedCategoryListNew = new ArrayList<Category>();
             for (Category categoryListNewCategoryToAttach : categoryListNew) {
                 categoryListNewCategoryToAttach = em.getReference(categoryListNewCategoryToAttach.getClass(), categoryListNewCategoryToAttach.getCategoryId());

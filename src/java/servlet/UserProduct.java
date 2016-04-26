@@ -3,31 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package login;
+package servlet;
 
-import dao.UserJpaController;
+import dao.ProductJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pojo.User;
-import java.util.List;
-import javax.persistence.Query;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Deu
+ * @author OMIMA
  */
-public class LoginServlet extends HttpServlet {
-
+@WebServlet(name = "UserProduct", urlPatterns = {"/UserProduct"})
+public class UserProduct extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,55 +35,29 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-        EntityManager em = emf.createEntityManager();
-
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
-            String emailStrLogin = request.getParameter("emailLogin");
-            String passStrLogin = request.getParameter("pwdLogin");
+            String prodctPrice = request.getParameter("price");
+            String prodctName = request.getParameter("name");
 
-            UserJpaController controller = new UserJpaController(emf);
-            // User user1 =controller.findUser(1);
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
 
-       //     out.println("name: " + emailStrLogin);
-            //     out.println("password: " + passStrLogin);
-            User userRef = new User();
-            Query q = em.createNamedQuery("User.findByEmail").setParameter("email", emailStrLogin);
-            List<User> results = q.getResultList();
-            if (results.size() != 0) {
-                userRef = results.get(0);
-               // out.println("the db name is :" + userRef.getUsername());
-                String pwdDB = userRef.getPassword();
+            ProductJpaController productController = new ProductJpaController(emf);
+          //  pojo.Product p=productController.findProduct(1);
 
-                if (pwdDB.equals(passStrLogin)) {
-                    HttpSession httpSessionRef = request.getSession(true);
-                    httpSessionRef.setAttribute("email", emailStrLogin);
-                  //  httpSessionRef.setAttribute("email", emailStrLogin);
-                     response.sendRedirect("index.html");
-//                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.html");
-//                    dispatcher.forward(request, response);
-                    out.print("okay");
-                } else {
-                    out.print("Sorry, either your email or password is wrong");
-                }
+            request.setAttribute("Products", productController.findProductEntities());
 
-            } else {
-               // out.println("<br> no user like this <br> ");
+          // prodctName= p.getProductName();
+            //prodctPrice= (p.getProductPrice()).t oString();
+//             out.println("<h1> Done </h1>");
+            // out.print( productController.findProduct(1);
+            RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
+            rd.include(request, response);
 
-                //response.sendRedirect("login.html");
-                out.print("Sorry, either your email or password is wrong");
-            }
-
-//            Query query = em.createQuery("SELECT email FROM user u");
-//            List<User> results = query.getResultList();
-//            userRef=results.get(0);
-//            out.println("names are :  "+userRef.getUsername());
-        } catch (Exception e) {
-            e.printStackTrace();
+            em.close();
         }
     }
 

@@ -69,23 +69,22 @@ public class MASServlet extends HttpServlet {
             out.println("<body>");
           //  <editor-fold defaultstate="collapsed" desc="create new product withCategory ">  
             
-            Product product1=new Product();
-            product1.setProductName("product4 ");
-            product1.setProductPrice(new BigDecimal(10));
-          
-            CategoryJpaController categoryController=new CategoryJpaController(emf);
-            
-            ArrayList<Category> categoriesList=new ArrayList<Category>();
-            Category foundCategory1=em.find(Category.class, 1);
-            Category foundCategory2=em.find(Category.class, 2);
-          
-            categoriesList.add(foundCategory1);
-            categoriesList.add(foundCategory2);
-            product1.setCategoryList(categoriesList);
-            
-            ProductJpaController productController=new ProductJpaController(emf);  
-           productController.create(product1);
-           
+//            Product product1=new Product();
+//            product1.setProductName("product4 ");
+//            product1.setProductPrice(new BigDecimal(10));
+//          
+//            CategoryJpaController categoryController=new CategoryJpaController(emf);
+//            
+//            ArrayList<Category> categoriesList=new ArrayList<Category>();
+//            Category foundCategory1=em.find(Category.class, 1);
+//            Category foundCategory2=em.find(Category.class, 2);
+//          
+//            categoriesList.add(foundCategory1);
+//            categoriesList.add(foundCategory2);
+//            product1.setCategoryList(categoriesList);
+//            
+//            ProductJpaController productController=new ProductJpaController(emf);  
+//           productController.create(product1);
           //</editor-fold>
           
             
