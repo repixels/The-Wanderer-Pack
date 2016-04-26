@@ -5,6 +5,7 @@
  */
 package Admin;
 
+import com.google.gson.Gson;
 import dao.CategoryJpaController;
 import dao.ProductJpaController;
 import dao.exceptions.NonexistentEntityException;
@@ -21,11 +22,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Parameter;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.jpa.criteria.CriteriaQueryImpl;
 import pojo.Category;
 
 /**
@@ -78,6 +81,10 @@ public class Product extends HttpServlet {
                 delete(request,response,id);
                 
                 
+            }
+            else if(productMode.equals("search")){
+                String name=request.getParameter("name");
+                search(request,response,name);
             }
             else{
             response.getWriter().print(productMode);
@@ -233,6 +240,25 @@ public class Product extends HttpServlet {
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    }
+
+    private void search(HttpServletRequest request, HttpServletResponse response, String name) {
+        
+        try {
+            PrintWriter out = response.getWriter();
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
+
+            Query query = em.createNativeQuery("SELECT * FROM Product p WHERE p.product_name LIKE '%"+name+"%'");
+            Gson gson=new Gson();
+            String result=gson.toJson(query.getResultList());
+            out.print(result);
+        } catch (IOException ex) {
+                Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
 

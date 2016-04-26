@@ -30,7 +30,7 @@
                     <!-- SEARCH -->
                     <li class="xn-search">
                         <form role="form">
-                            <input type="text" name="search" placeholder="Search..."/>
+                            <input  id="searchInput" type="text" name="search" placeholder="Search..." onkeyup="searchProducts()"/>
                         </form>
                     </li>   
                     <!-- END SEARCH -->
@@ -103,6 +103,14 @@
                                 <div class="widget-subtitle plugin-date">Loading...</div>
                             </div>                        
                             <!-- END WIDGET CLOCK -->
+                            
+                            <div class="widget widget-info widget-padding-sm">
+                                <div class="widget-big-int plugin-clock" id="searchHrefDiv" >
+                                    
+                                </div>                            
+                                
+                            </div>                        
+                            
                         </div>
                     </div>
                     <!-- END WIDGETS --> 
@@ -116,6 +124,9 @@
         
         <%@include file="scripts.jsp" %>
         <!-- THIS PAGE PLUGINS -->
+        
+        
+        
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
@@ -131,6 +142,8 @@
         
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+        
+        <script type='text/javascript' src='js/SearchProduct.js'></script>        
         <!-- END PAGE PLUGINS -->
         
 
