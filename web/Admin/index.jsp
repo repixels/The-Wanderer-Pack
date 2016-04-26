@@ -28,11 +28,7 @@
                     </li>
                     <!-- END TOGGLE NAVIGATION -->
                     <!-- SEARCH -->
-                    <li class="xn-search">
-                        <form role="form">
-                            <input  id="searchInput" type="text" name="search" placeholder="Search..." onkeyup="searchProducts()"/>
-                        </form>
-                    </li>   
+                    <%@include file="search.jsp" %>
                     <!-- END SEARCH -->
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
@@ -143,7 +139,7 @@
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
         
-        <script type='text/javascript' src='js/SearchProduct.js'></script>        
+       
         <!-- END PAGE PLUGINS -->
         
 

@@ -26,7 +26,7 @@ function searchHandle(responseTxt, statusTxt, xhr){
 
 function printHref(result){
     var hrefDiv=document.getElementById("searchHrefDiv");
-    
+    hrefDiv.innerHTML="";
     for (i = 0; i < result.length; i++) {
         var a = document.createElement('a');
         
