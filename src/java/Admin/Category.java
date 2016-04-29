@@ -35,7 +35,7 @@ import pojo.Product;
 @WebServlet(name = "Category", urlPatterns = {"/Admin/Category"})
 @MultipartConfig
 public class Category extends HttpServlet {
-
+  PrintWriter out;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,7 +51,7 @@ public class Category extends HttpServlet {
 
         String categoryMode = request.getParameter("categoryMode");
         
-        PrintWriter out = response.getWriter();
+         out = response.getWriter();
         
         if (categoryMode != null) {
             if (categoryMode.equals("insert")) {
@@ -71,7 +71,6 @@ public class Category extends HttpServlet {
                 
             }
             else if (categoryMode.equals("showAll")){
-            
                 showAll(request,response);
             }
         }
@@ -104,47 +103,17 @@ public class Category extends HttpServlet {
 
     }
 
-    public void createNewCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void createNewCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException 
+    {
         pojo.Category category = populateCategory(request);
 
-        //  <editor-fold defaultstate="collapsed" desc="upload image "> 
-//        Part part = request.getPart("categoryImage");
-//        log("part:  "+part.getSubmittedFileName());
-//        File path=new File("C:\\Users\\Mohammed\\Desktop\\upload\\");
-//        path.mkdirs();
-//        File file= new File(path.getAbsoluteFile()+"\\"+part.getSubmittedFileName());
-//
-//                
-//        part.write(file.getAbsolutePath());
-        //</editor-fold>
-        //  <editor-fold defaultstate="collapsed" desc="create new category ">
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
       
         CategoryJpaController categoryController = new CategoryJpaController(emf);
-
+        
         //create new category
         categoryController.create(category);
-
-//            </editor-fold>
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Category</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Category at " + request.getContextPath() + "</h1>");
-            out.println("<h1> name :" + category.getCategorName() + "</h1>");
-            out.println("<h1> desc :" + category.getCategoryDescription() + "</h1>");
-            out.println("<h1> image :" + category.getCategoryImage() + "</h1>");
-//            out.println("<h1> products :"+category.get+"</h1>");
-//            out.println("<h1> subCat :"+subCat+"</h1>");
-//            
-
-            out.println("</body>");
-            out.println("</html>");
-        }
+        request.getRequestDispatcher("Category?categoryMode=showAll").forward(request, response);
     }
 
     public pojo.Category populateCategory(HttpServletRequest request) throws IOException, ServletException {
@@ -154,12 +123,12 @@ public class Category extends HttpServlet {
         String subCat = request.getParameter("categoryList");
 
 //        //TODO  add the saved folder of images to path of image
-        Part part = request.getPart("categoryImage");
-        String image = part.getSubmittedFileName();
+//        Part part = request.getPart("categoryImage");
+//        String image = part.getSubmittedFileName();
         pojo.Category category = new pojo.Category();
         category.setCategorName(name);
         category.setCategoryDescription(desc);
-        category.setCategoryImage(image);
+//        category.setCategoryImage(image);
         return category;
     }
 
@@ -204,7 +173,6 @@ public class Category extends HttpServlet {
 
     private void showEditPage(HttpServletRequest request, HttpServletResponse response,int id) throws IOException, ServletException {
 
-        //  <editor-fold defaultstate="collapsed" desc="create new category ">
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
         EntityManager em = emf.createEntityManager();
         CategoryJpaController categoryController = new CategoryJpaController(emf);
@@ -213,50 +181,21 @@ public class Category extends HttpServlet {
         pojo.Category category = categoryController.findCategory(id);
         request.setAttribute("category", category);
 
-        request.getRequestDispatcher("AddCategory.jsp").forward(request, response);
-
-//            </editor-fold>
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Category</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Category at " + request.getContextPath() + "</h1>");
-
-            out.println("</body>");
-            out.println("</html>");
-        }
+        request.getRequestDispatcher("add-category.jsp").forward(request, response);
 
     }
 
     private void showAll(HttpServletRequest request, HttpServletResponse response) {
-        PrintWriter out = null;
-        try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-            EntityManager em = emf.createEntityManager();
-            CategoryJpaController controller=new CategoryJpaController(emf);
-            out = response.getWriter();
-            for (pojo.Category cat : controller.findCategoryEntities()) {
-                out.println("id : "+cat.getCategoryId()+"</br>");
-                out.println("name : "+cat.getCategorName()+"</br>");
-                out.println("desc : "+cat.getCategoryDescription()+"</br>");
-            }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+        EntityManager em = emf.createEntityManager();
+        CategoryJpaController controller=new CategoryJpaController(emf);
         request.setAttribute("allCategories", controller.findCategoryEntities());
         try {
-            request.getRequestDispatcher("ShowAllCategories.jsp").forward(request, response);
+            request.getRequestDispatcher("categories.jsp").forward(request, response);
         } catch (ServletException ex) {
             Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        } catch (IOException ex) {
-            Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            out.close();
         }
     }
 
