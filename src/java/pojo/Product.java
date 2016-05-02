@@ -56,7 +56,7 @@ public class Product implements Serializable {
     private BigDecimal productPrice;
     @Column(name = "product_image")
     private String productImage;
-    @ManyToMany(mappedBy = "productList", cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(mappedBy = "productList", cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<UserOrder> order1List;
     @ManyToMany(mappedBy = "productList" ,cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)//(cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
     private List<Category> categoryList;
