@@ -23,19 +23,22 @@
     <!--login-->
     <div class="container">
         <div class="login">
-            <form>
+            <form action="LoginServlet">
                 <div class="col-md-6 login-do">
                     <div class="login-mail">
-                        <input type="text" placeholder="Email" required="">
+                        <input type="text" placeholder="Email" required="" name="emailLogin" id="emailLogin">
                         <i  class="glyphicon glyphicon-envelope"></i>
                     </div>
                     <div class="login-mail">
-                        <input type="password" placeholder="Password" required="">
+                        <input type="password" placeholder="Password" required="" name="pwdLogin" id="pwdLogin" onblur="nameValidAJAX()">
                         <i class="glyphicon glyphicon-lock"></i>
                     </div>
-                    <a class="news-letter " href="#">
+                    <!--<a class="news-letter " href="#">
                         <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
-                    </a>
+                    </a>-->
+                    <div> 
+                            <label id="wrongMailLBL_id" style="color: red"/>
+                        </div>
                     <label class="hvr-skew-backward">
                         <input type="submit" value="login">
                     </label>
@@ -77,7 +80,45 @@
 <!--//footer-->
 <jsp:include page="footer.jsp"/>
 <!--//footer-->
-
+<script type="text/javascript">
+    //---------------------------2ND part----------------------------------------------------
+    var reqSND = null;
+    function nameValidAJAX()
+    {
+        var email=document.getElementById('emailLogin').value;
+        var pwd=document.getElementById('pwdLogin').value;
+        if (window.XMLHttpRequest)
+        {
+            reqSND = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {
+            reqSND = new ActiveXObject(Microsoft.XMLHTTP)
+        }
+        reqSND.onreadystatechange = handleReqSND;
+        reqSND.open("GET", "LoginServlet?emailLogin="+email+"&pwdLogin="+pwd, true)
+        reqSND.send(null);
+        //  document.getElementById('textOut_id').innerHTML = "Must Enter Name";
+        // alert("called");
+    }
+    ;
+    function handleReqSND()
+    {
+        if (reqSND.readyState == 4)
+        {
+            if (reqSND.status == 200)
+            {
+                document.getElementById('wrongMailLBL_id').innerHTML = " GOT: " + reqSND.responseText;
+            }
+            else
+            {
+                document.getElementById('wrongMailLBL_id').innerHTML = " Error: " + reqSND.status;
+            }
+        }
+    }
+    ;
+    
+</script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
 <script src="js/simpleCart.min.js"></script>
