@@ -64,9 +64,7 @@
                             <input type="text" placeholder="City" required="" name = "city">
                             <i  class="glyphicon glyphicon-home"></i>
                         </div>
-
                         <br>
-
                         <div class="login-mail">
                             <input type="text" placeholder="Country" required="" name = "country">
                              <i  class="glyphicon glyphicon-home"></i>
@@ -80,8 +78,6 @@
                             <input type="text" placeholder="Address Details" required="" name = "addressDetails">
                             <i  class="glyphicon glyphicon-home"></i>
                         </div>
-
-
                         <div class="login-mail">
                             <input type="text" placeholder="Land Mark" required="" name = "landMark">
                             <i  class="glyphicon glyphicon-map-marker"></i>
