@@ -59,7 +59,8 @@
     </head>
 
     <body>
-
+        
+       
     <div class="container">
         <div class="head">
             <div class=" logo">
@@ -133,51 +134,36 @@
                     <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
                         <ul class="nav navbar-nav nav_1">
                             <li><a class="color" href="index.jsp">Home</a></li>
-
-                            <li class="dropdown mega-dropdown active">
-                                <a class="color1" href="#" class="dropdown-toggle" data-toggle="dropdown">Women<span class="caret"></span></a>				
-                                <div class="dropdown-menu ">
-                                    <div class="menu-top">
-                                        <div class="col1">
-                                            <div class="h_nav">
-                                                <h4>Submenu1</h4>
-                                                <ul>
-                                                    <li><a href="/The_Wanderer_Pack/UserProduct">Accessories</a></li>
-
-                                                </ul>	
-                                            </div>							
-                                        </div>
-
-                                        <div class="col1 col5">
-                                            <img src="images/me.png" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>                  
-                                </div>				
-                            </li>
-                            <li class="dropdown mega-dropdown active">
-                                <a class="color2" href="#" class="dropdown-toggle" data-toggle="dropdown">Men<span class="caret"></span></a>				
-                                <div class="dropdown-menu mega-dropdown-menu">
-                                    <div class="menu-top">
-                                        <div class="col1">
-                                            <div class="h_nav">
-                                                <h4>Submenu1</h4>
-                                                <ul>
-                                                    <li><a href="product.jsp">Accessories</a></li>
-                                                    <li><a href="product.jsp">Bags</a></li>
-
-                                                </ul>	
-                                            </div>							
-                                        </div>
-                                        <div class="col1 col5">
-                                            <img src="images/me1.png" class="img-responsive" alt="">
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>                  
-                                </div>				
-                            </li>
-                            <li><a class="color3" href="product.jsp">Sale</a></li>
-
+                            <c:forEach  var="cat"   items="${applicationScope.categories}" >
+                                <c:if test="${cat.categoryParentId == null}">
+                                    <li class="dropdown mega-dropdown active">
+                                        <a class="color1" href="#" class="dropdown-toggle" data-toggle="dropdown">${cat.categorName}
+                                            <c:if test="${cat.categoryList.size() != 0}">
+                                                <span class="caret"></span>
+                                            </c:if>
+                                        </a>
+                                        <c:if test="${cat.categoryList.size() != 0}">
+                                            <div class="dropdown-menu ">
+                                                <div class="menu-top">
+                                                    <div class="col1">
+                                                        <div class="h_nav">
+                                                            <h4>${cat.categorName}</h4>
+                                                            <ul>
+                                                                <c:forEach var="subCategory" items="${cat.categoryList}">
+                                                                    <li>
+                                                                        <a href="/The_Wanderer_Pack/UserProduct">${subCategory.categorName}</a>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>	
+                                                        </div>							
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>                  
+                                            </div>
+                                        </c:if>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
                             <li ><a class="color6" href="contact.jsp">Contact</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->

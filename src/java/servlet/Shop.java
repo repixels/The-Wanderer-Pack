@@ -5,8 +5,14 @@
  */
 package servlet;
 
+import dao.CategoryJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,16 +39,17 @@ public class Shop extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Shop</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Shop at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+           
+            ServletContext servletContext = getServletContext();
+            
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
+            CategoryJpaController controller=new CategoryJpaController(emf);
+            List<pojo.Category> categories = controller.findCategoryEntities();
+            
+            servletContext.setAttribute("categories", categories);
+            
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 
