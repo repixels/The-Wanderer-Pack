@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
     <!--header-->
     <jsp:include page="header.jsp"/>
     <!--banner-->
@@ -23,13 +22,12 @@
                             <i  class="glyphicon glyphicon-user"></i>
                          
                         </div>
-
                            
                         <div class="login-mail">
                             <input type="text" placeholder="User Name" required="" name = "userName">
                             <i  class="glyphicon glyphicon-user"></i>
                         </div>
-                        <label id ="emailLabel" style="color: red"></label>
+                    
                         <div class="login-mail">
                             <input type ="email" placeholder="Email" required="" name = "email" id= "email" onblur="submitLoginForm()">
                             <i  class="glyphicon glyphicon-envelope"></i>
@@ -83,8 +81,11 @@
                         </div>
 
                         <div class="clearfix"> </div>
-                </form>
-    </div>
+  
+                    </div>
+                 
+                    <label id ="emailLabel" style="color: red"></label>
+                      </form>
     <!--//login-->
     <!--brand-->
     <div class="container">
