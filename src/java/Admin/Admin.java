@@ -5,8 +5,14 @@
  */
 package Admin;
 
+import dao.CategoryJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +51,14 @@ public class Admin extends HttpServlet {
                 case "login":
                     request.getSession(true).setAttribute("isLogged", "1");
                     response.sendRedirect("index.jsp");
+                    ServletContext servletContext = getServletContext();
+            
+                    EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+                    EntityManager em = emf.createEntityManager();
+                    CategoryJpaController controller=new CategoryJpaController(emf);
+                    List<pojo.Category> categories = controller.findCategoryEntities();
+
+                    servletContext.setAttribute("categories", categories);
                     break;
                     
             }

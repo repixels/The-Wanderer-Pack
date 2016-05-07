@@ -109,9 +109,9 @@
                                            <label class="col-md-3 col-xs-12 control-label">Choose a Parent Category</label>
                                            <div class="col-md-6 col-xs-12">                                                                                            
                                                <select class="form-control select" name="categories">
-                                                   <c:forEach  items="${requestScope.allCategories}" var="category" varStatus="i">
-                                                       <c:if test="${category.categoryParentId == null}">
-                                                            <option value="${category.categoryId}">${category.categorName}</option>    
+                                                   <c:forEach  items="${applicationScope.categories}" var="parentCategory" varStatus="i">
+                                                       <c:if test="${parentCategory.categoryParentId == null}">
+                                                            <option value="${parentCategory.categoryId}">${parentCategory.categorName}</option>    
                                                        </c:if>
                                                    </c:forEach>
                                                </select>
