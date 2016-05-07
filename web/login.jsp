@@ -23,24 +23,25 @@
     <!--login-->
     <div class="container">
         <div class="login">
-            <form action="LoginServlet">
+            <form >
                 <div class="col-md-6 login-do">
                     <div class="login-mail">
                         <input type="text" placeholder="Email" required="" name="emailLogin" id="emailLogin">
                         <i  class="glyphicon glyphicon-envelope"></i>
                     </div>
                     <div class="login-mail">
-                        <input type="password" placeholder="Password" required="" name="pwdLogin" id="pwdLogin" onblur="nameValidAJAX()">
+                        <input type="password" placeholder="Password" required="" name="pwdLogin" id="pwdLogin" >
                         <i class="glyphicon glyphicon-lock"></i>
                     </div>
                     <!--<a class="news-letter " href="#">
                         <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
                     </a>-->
                     <div> 
-                            <label id="wrongMailLBL_id" style="color: red"/>
-                        </div>
+                        <label id="wrongMailLBL_id" style="color: red"/>
+                    </div>
                     <label class="hvr-skew-backward">
-                        <input type="submit" value="login" disabled>
+                        <input class=" hvr-skew-backward" type="button" value="login" id="login_id" onclick="nameValidAJAX();
+                                return false">
                     </label>
                 </div>
                 <div class="col-md-6 login-right">
@@ -85,8 +86,8 @@
     var reqSND = null;
     function nameValidAJAX()
     {
-        var email=document.getElementById('emailLogin').value;
-        var pwd=document.getElementById('pwdLogin').value;
+        var email = document.getElementById('emailLogin').value;
+        var pwd = document.getElementById('pwdLogin').value;
         if (window.XMLHttpRequest)
         {
             reqSND = new XMLHttpRequest();
@@ -96,19 +97,36 @@
             reqSND = new ActiveXObject(Microsoft.XMLHTTP)
         }
         reqSND.onreadystatechange = handleReqSND;
-        reqSND.open("GET", "LoginServlet?emailLogin="+email+"&pwdLogin="+pwd, true)
+        reqSND.open("GET", "LoginServlet?emailLogin=" + email + "&pwdLogin=" + pwd + "&flagLogin=1", true)
         reqSND.send(null);
         //  document.getElementById('textOut_id').innerHTML = "Must Enter Name";
         // alert("called");
     }
     ;
-    function handleReqSND()
+    function handleReqSND(responseTxt, statusTxt, xhr)
     {
         if (reqSND.readyState == 4)
         {
             if (reqSND.status == 200)
             {
-                document.getElementById('wrongMailLBL_id').innerHTML = " GOT: " + reqSND.responseText;
+
+                var sth = reqSND.responseText;
+                //  alert(sth)
+
+                if (sth == "Sorry")
+                {
+                    document.getElementById('wrongMailLBL_id').innerHTML = " Sorry, password is wrong";
+                }
+
+                if (sth == "okay")
+                {
+                    window.location = "index.jsp";
+
+                }
+                else
+                {
+                    document.getElementById('wrongMailLBL_id').innerHTML = " Sorry, That's a wrong Email";
+                }
             }
             else
             {
@@ -117,7 +135,7 @@
         }
     }
     ;
-    
+
 </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 

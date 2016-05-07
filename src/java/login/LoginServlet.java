@@ -49,48 +49,60 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
+            String FlagLogin = request.getParameter("flagLogin");
+
             String emailStrLogin = request.getParameter("emailLogin");
             String passStrLogin = request.getParameter("pwdLogin");
 
             UserJpaController controller = new UserJpaController(emf);
             // User user1 =controller.findUser(1);
 
-       //     out.println("name: " + emailStrLogin);
+            //     out.println("name: " + emailStrLogin);
             //     out.println("password: " + passStrLogin);
-            User userRef = new User();
-            Query q = em.createNamedQuery("User.findByEmail").setParameter("email", emailStrLogin);
-            List<User> results = q.getResultList();
-            if (results.size() != 0) {
-                userRef = results.get(0);
-               // out.println("the db name is :" + userRef.getUsername());
-                String pwdDB = userRef.getPassword();
-                String nameDB = userRef.getUsername();
-
-                if (pwdDB.equals(passStrLogin)) {
-                    HttpSession httpSessionRef = request.getSession(true);
-                    httpSessionRef.setAttribute("email", emailStrLogin);
-                    httpSessionRef.setAttribute("userName", nameDB);
-                     response.sendRedirect("index.jsp");
-//                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.html");
-//                    dispatcher.forward(request, response);
-                    out.print("okay");
-                } else {
-                    out.print("Sorry, either your email or password is wrong");
-                }
-
+            if (FlagLogin.equals("0")) {
+                HttpSession httpSessionRef = request.getSession(true);
+                httpSessionRef.setAttribute("email", "");
+                httpSessionRef.setAttribute("userName", "");
+                response.sendRedirect("index.jsp");
             } else {
-               // out.println("<br> no user like this <br> ");
+                User userRef = new User();
+                Query q = em.createNamedQuery("User.findByEmail").setParameter("email", emailStrLogin);
+                List<User> results = q.getResultList();
+                if (results.size() != 0) {
+                    userRef = results.get(0);
+                    // out.println("the db name is :" + userRef.getUsername());
+                    String pwdDB = userRef.getPassword();
+                    String nameDB = userRef.getUsername();
 
-                //response.sendRedirect("login.html");
-                out.print("Sorry, either your email or password is wrong");
-            }
+                    if (pwdDB.equals(passStrLogin)) {
+                        HttpSession httpSessionRef = request.getSession(true);
+                        httpSessionRef.setAttribute("email", emailStrLogin);
+                        httpSessionRef.setAttribute("userName", nameDB);
+//                     response.sendRedirect("index.jsp");
+//                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
+//                    dispatcher.forward(request, response);
+                        out.print("okay");
+                    } else {
+                        out.print("Sorry");
+                        //     response.sendRedirect("index.jsp");
+                        //    out.print("<html><body onload=\"alert('Hello World')\"></body></html>");
+                    }
+
+                } else {
+                    out.println("no");
+
+                    //response.sendRedirect("login.html");
+                    //   out.print("Sorry, either your email or password is wrong");
+                }
 
 //            Query query = em.createQuery("SELECT email FROM user u");
 //            List<User> results = query.getResultList();
 //            userRef=results.get(0);
 //            out.println("names are :  "+userRef.getUsername());
+            }
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 

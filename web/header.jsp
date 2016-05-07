@@ -90,7 +90,7 @@
                         <li><a href=""></a></li>
                         <li><a href=""></a></li>
                         <li><a href=""></a></li>
-                        <li><a href="login.jsp">LoginOut</a></li>
+                        <li><a href="LoginServlet?emailLogin=no&pwdLogin=no&flagLogin=0">LoginOut</a></li>
                     </ul>
                 </div>
             </c:if>
