@@ -23,26 +23,30 @@
         <div class="container">
             <div class="col-md-9">
                 <div class="mid-popular">
+                    
+                     <c:forEach  var="product" items="${requestScope.Products}" >
                     <div class="col-md-4 item-grid1 simpleCart_shelfItem">
                         <div class=" mid-pop">
                             <div class="pro-img">
                                 <img src="images/pc.jpg" class="img-responsive" alt="">
                                 <div class="zoom-icon ">
                                     <a class="picture" href="images/pc.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
-                                    <a href="single.jsp"><i class="glyphicon glyphicon-menu-right icon"></i></a>
+                                    <a href="SingleServlet?id=${product.productId}"><i class="glyphicon glyphicon-menu-right icon"></i></a>
                                 </div>
                             </div>
-
-
-
-                            <c:forEach  var="product" items="${requestScope.Products}" >
                                 <div class="mid-1">
                                     <div class="women">
                                         <div class="women-top">
+                                           
+                                            <input type="hidden" name="id"  value="${product.productId}" />
+                                   
+                                           <!-- 
+                                           <%--<c:set var="productId" value="${product.productId}"/>--%>
+                                             -->
                                             <span name="name">
                                                 <c:out value="${product.productName}"/>
                                             </span>
-                                            <h6><a href="single.jsp"><c:out value="${product.productDescription}"/></a></h6>
+                                            <h6><a href="SingleServlet?id=${product.productId}"><c:out value="${product.productDescription}"/></a></h6>
                                         </div>
                                         <div class="img item_add">
                                             <a href="#"><img src="images/ca.png" alt=""></a>
@@ -57,9 +61,9 @@
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
-                            </c:forEach>
                         </div>
-                    </div>
+                    </div>                   
+                   </c:forEach>
                     <div class="clearfix"></div>
                 </div>
             </div>
