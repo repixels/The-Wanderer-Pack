@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Admin;
+package servlet;
 
 import dao.CategoryJpaController;
 import java.io.IOException;
@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Ehab
  */
-@WebServlet(name = "Admin", urlPatterns = {"/Admin/Admin","/Admin"})
-public class Admin extends HttpServlet {
+@WebServlet(name = "Shop", urlPatterns = {"/Shop"})
+public class Shop extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,29 +39,17 @@ public class Admin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String userAction = request.getParameter("action");
+           
+            ServletContext servletContext = getServletContext();
             
-            switch (userAction)
-            {
-                case "logout":
-                    request.getSession(true).setAttribute("isLogged", "-1");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                    break;
-                case "login":
-                    request.getSession(true).setAttribute("isLogged", "1");
-                    response.sendRedirect("index.jsp");
-                    ServletContext servletContext = getServletContext();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
+            CategoryJpaController controller=new CategoryJpaController(emf);
+            List<pojo.Category> categories = controller.findCategoryEntities();
             
-                    EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-                    EntityManager em = emf.createEntityManager();
-                    CategoryJpaController controller=new CategoryJpaController(emf);
-                    List<pojo.Category> categories = controller.findCategoryEntities();
-
-                    servletContext.setAttribute("categories", categories);
-                    break;
-                    
-            }
+            servletContext.setAttribute("categories", categories);
+            
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

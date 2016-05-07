@@ -13,12 +13,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -119,16 +121,17 @@ public class Category extends HttpServlet {
     public pojo.Category populateCategory(HttpServletRequest request) throws IOException, ServletException {
         String name = request.getParameter("categorName");
         String desc = request.getParameter("categoryDescription");
-        String products = request.getParameter("products");
-        String subCat = request.getParameter("categoryList");
+        int parentCategoryId = new Integer(request.getParameter("categories"));
+       EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+        CategoryJpaController categoryController = new CategoryJpaController(emf);
+        pojo.Category parentCategory = categoryController.findCategory(parentCategoryId);
 
-//        //TODO  add the saved folder of images to path of image
-//        Part part = request.getPart("categoryImage");
-//        String image = part.getSubmittedFileName();
+        
         pojo.Category category = new pojo.Category();
         category.setCategorName(name);
         category.setCategoryDescription(desc);
-//        category.setCategoryImage(image);
+        category.setCategoryParentId(parentCategory);
+        
         return category;
     }
 

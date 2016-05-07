@@ -41,6 +41,9 @@ public class UserProduct extends HttpServlet {
 
             String prodctPrice = request.getParameter("price");
             String prodctName = request.getParameter("name");
+            String prodctID = request.getParameter("id");
+
+           //  request.setAttribute(prodctID,);
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
             EntityManager em = emf.createEntityManager();
@@ -50,12 +53,14 @@ public class UserProduct extends HttpServlet {
 
             request.setAttribute("Products", productController.findProductEntities());
 
+           // request.setAttribute("selectedProduct", productController.findProduct(Integer.SIZE));
+           
           // prodctName= p.getProductName();
             //prodctPrice= (p.getProductPrice()).t oString();
 //             out.println("<h1> Done </h1>");
             // out.print( productController.findProduct(1);
             RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
-            rd.include(request, response);
+            rd.forward(request, response);
 
             em.close();
         }

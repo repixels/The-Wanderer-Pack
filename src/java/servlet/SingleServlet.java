@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Admin;
+package servlet;
 
-import dao.CategoryJpaController;
+import dao.ProductJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import pojo.Product;
 
 /**
  *
- * @author Ehab
+ * @author omima
  */
-@WebServlet(name = "Admin", urlPatterns = {"/Admin/Admin","/Admin"})
-public class Admin extends HttpServlet {
+@WebServlet(name = "SingleServlet", urlPatterns = {"/SingleServlet"})
+public class SingleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,28 +40,24 @@ public class Admin extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String userAction = request.getParameter("action");
             
-            switch (userAction)
-            {
-                case "logout":
-                    request.getSession(true).setAttribute("isLogged", "-1");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                    break;
-                case "login":
-                    request.getSession(true).setAttribute("isLogged", "1");
-                    response.sendRedirect("index.jsp");
-                    ServletContext servletContext = getServletContext();
             
-                    EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-                    EntityManager em = emf.createEntityManager();
-                    CategoryJpaController controller=new CategoryJpaController(emf);
-                    List<pojo.Category> categories = controller.findCategoryEntities();
+          int myProductId =Integer.parseInt(request.getParameter("id"));
+            
+          //object // get from db by id 
+          
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+           
+            ProductJpaController controller=new ProductJpaController(emf);
+            
+            //Product product = controller.findProduct(myProductId);
+            
+          request.setAttribute("product",controller.findProduct(myProductId));
 
-                    servletContext.setAttribute("categories", categories);
-                    break;
-                    
-            }
+          RequestDispatcher rd = request.getRequestDispatcher("single.jsp");
+            rd.include(request, response);
+            
+            
         }
     }
 
