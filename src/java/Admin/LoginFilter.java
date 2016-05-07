@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -157,7 +158,8 @@ public class LoginFilter implements Filter {
         Throwable problem = null;
         
         try {
-            if(wrappedRequest.getSession(false).getAttribute("isLogged") == null || !wrappedRequest.getSession(false).getAttribute("isLogged").equals("1"))
+            HttpSession session = wrappedRequest.getSession(false);
+            if(session==null||session.getAttribute("isLogged") == null || !session.getAttribute("isLogged").equals("1"))
             {
                 wrappedResponse.sendRedirect("login.jsp");
             }

@@ -3,13 +3,15 @@
     Created on : Apr 8, 2016, 1:56:16 PM
     Author     : OMIMA
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
     <!--header-->
     <jsp:include page="header.jsp"/>
+    
+    <input type="text" id="productId" name="productId" hidden value="1" />
     <!--banner-->
     <div class="banner-top">
         <div class="container">
@@ -18,7 +20,7 @@
             <h2><a href="index.jsp">Home</a><label>/</label>Single</a></h2>
         </div>
     </div>
-    <div class="single">
+    <div class="single"x    >
         <div class="container">
             <div class="col-md-9">
                 <div class="col-md-5 grid">		
@@ -74,8 +76,9 @@
                             });
                         </script>
                         <!--quantity-->
-
-                        <a href="#" class="add-to item_add hvr-skew-backward">Add to cart</a>
+                        
+                        <a href="#" id="addToCart" onclick="addToCart(); return false; " class="add-to hvr-skew-backward">Add to cart</a>
+                     
                         <div class="clearfix"> </div>
                     </div>
                 </div>
@@ -290,5 +293,6 @@
 <script src="js/simpleCart.min.js"></script>
 <!-- slide -->
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript"  src="js/Cart.js"></script>
 </body>
 </html>

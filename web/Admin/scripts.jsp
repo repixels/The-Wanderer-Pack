@@ -43,3 +43,4 @@
 <script type="text/javascript" src="js/actions.js"></script>        
 <!-- END TEMPLATE -->
 <!-- End Scripts -->
+<script type='text/javascript' src='js/SearchProduct.js'></script>
