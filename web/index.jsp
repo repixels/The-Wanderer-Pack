@@ -3,6 +3,7 @@
     Created on : Apr 8, 2016, 1:49:22 PM
     Author     : OMIMA
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
     <!--header-->
 
     <!--banner-->
-    
+
     <div class="banner">
         <div class="container">
         </div>
@@ -51,43 +52,57 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <!--products-->
+            <!--products---------------------------------------------------------------------------------------------------------------------------------------------------------------->
             <div class="content-mid">
                 <h3>Trending Items</h3>
                 <label class="line"></label>
-                <div class="mid-popular">
-                    <div class="col-md-3 item-grid simpleCart_shelfItem">
-                        <div class=" mid-pop">
-                            <div class="pro-img">
-                                <img src="images/pc.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon ">
-                                    <a class="picture" href="images/pc.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
-                                    <a href="single.jsp"><i class="glyphicon glyphicon-menu-right icon"></i></a>
+
+
+
+                <c:forEach var="item" items="${requestScope.productsREQ}">
+                      
+
+
+                    <div class="mid-popular">
+                        <div class="col-md-3 item-grid simpleCart_shelfItem">
+                            <div class=" mid-pop">
+                                <div class="pro-img">
+                                    <img src="images/pc.jpg" class="img-responsive" alt="">
+                                    <div class="zoom-icon ">
+                                        <a class="picture" href="images/pc.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
+                                        <a href="single.jsp"><i class="glyphicon glyphicon-menu-right icon"></i></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Category</span>
-                                        <h6><a href="single.jsp">description</a></h6>
+                                <div class="mid-1">
+                                    <div class="women">
+                                        <div class="women-top">                          
+
+                                            <span><c:out value="${item.getProductName()}"/></span>
+                                            <span> Category</span> 
+                                            <h6><a href="single.jsp">description</a></h6>
+                                        </div>
+                                        <div class="img item_add">
+                                            <a href="#"><img src="images/ca.png" alt=""></a>
+                                        </div>
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="images/ca.png" alt=""></a>
+                                    <div class="mid-2">
+                                        <p ><label>old price</label><em class="item_price">price</em></p>
+                                        <div class="block">
+                                            <div class="starbox small ghosting"> </div>
+                                        </div>
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p ><label>old price</label><em class="item_price">price</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"> </div>
-                                    </div>
-                                    <div class="clearfix"></div>
                                 </div>
                             </div>
                         </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
+
+
+                </c:forEach>
+
+
             </div>
         </div>
     </div>

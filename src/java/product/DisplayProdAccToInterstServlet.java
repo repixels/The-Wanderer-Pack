@@ -21,11 +21,14 @@ import pojo.Category;
 import pojo.Interest;
 import pojo.Product;
 import pojo.User;
+import javax.servlet.annotation.WebServlet;
+
 
 /**
  *
  * @author Deu
  */
+@WebServlet(name = "DisplayProdAccToInterstServlet", urlPatterns = {"/DisplayProdAccToInterstServlet"})
 public class DisplayProdAccToInterstServlet extends HttpServlet {
 
     /**
