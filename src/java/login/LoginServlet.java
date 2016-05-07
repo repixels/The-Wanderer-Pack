@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
                     HttpSession httpSessionRef = request.getSession(true);
                     httpSessionRef.setAttribute("email", emailStrLogin);
                   //  httpSessionRef.setAttribute("email", emailStrLogin);
-                     response.sendRedirect("index.html");
+                     response.sendRedirect("index.jsp");
 //                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.html");
 //                    dispatcher.forward(request, response);
                     out.print("okay");
