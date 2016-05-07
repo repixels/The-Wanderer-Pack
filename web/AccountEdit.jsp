@@ -21,27 +21,25 @@
     <!--login-->
     <div class="container">
         <div class="login">
-            <form>
+            <form action ="EditProfileServlet">
                 <div class="col-md-6 login-do">
+                   
                     <div class="login-mail">
-                        <input type="text" placeholder="Name" required="">
+                        <input type="text" value="${name}" required="" name="userName">
                         <i  class="glyphicon glyphicon-user"></i>
                     </div>
+                    
                     <div class="login-mail">
-                        <input type="text" placeholder="User Name" required="">
-                        <i  class="glyphicon glyphicon-user"></i>
-                    </div>
-                    <div class="login-mail">
-                        <input type="text" placeholder="Phone Number" required="">
-                        <i  class="glyphicon glyphicon-phone"></i>
-                    </div>
-                    <div class="login-mail">
-                        <input type="text" placeholder="Email" required="">
+                        <input type="text" value= "${email}" required="" name="email">
                         <i  class="glyphicon glyphicon-envelope"></i>
                     </div>
                     <div class="login-mail">
-                        <input type="password" placeholder="Password" required="">
+                        <input type="password" value="${password}" required="" name="password">
                         <i class="glyphicon glyphicon-lock"></i>
+                    </div>
+                         <div class="login-mail">
+                        <input type="number" value="${creditNumber}" required="" name="creditNumber">
+                        <i  class="glyphicon glyphicon-home"></i>
                     </div>
                     <div class="login-mail">
                         <Label>Choose your Interests</label>
@@ -49,9 +47,9 @@
                     <div class="login-mail">
                         <br/>   
                         <a class="news-letter " href="#">
-                            <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Option1</label>
-                            <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Option2</label>
-                            <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Option3</label>
+                            <label class="checkbox1"><input type="checkbox" name="interests" value="Sports" id = "Sports"><i> </i>Sports</label>
+                            <label class="checkbox1"><input type="checkbox" name="interests" value="Reading" id = "Reading" ><i> </i>Reading</label>
+                            <label class="checkbox1"><input type="checkbox" name="interests" value="Music" id = "Music"><i> </i>Music</label>
                         </a>
                     </div>
                     <label class="hvr-skew-backward">
@@ -59,28 +57,25 @@
                     </label>
                 </div>
                 <div class="col-md-6 login-right">
+ 
                     <div class="login-mail">
-                        <input type="text" placeholder="City" required="">
+                        <input type="text" value="${city}" required="" name="city">
                         <i  class="glyphicon glyphicon-home"></i>
                     </div>
                     <div class="login-mail">
-                        <input type="text" placeholder="Country" required="">
+                        <input type="text" value="${country}" required="" name="country">
                     </div>
-                    <script>
-                        populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id of state drop-down
-                        populateCountries("country2");
-                        populateCountries("country2");
-                    </script>
+                  
                     <div class="login-mail">
-                        <input type="text" placeholder="State" required="">
+                        <input type="text" value="${state}" required=""name="state">
                         <i  class="glyphicon glyphicon-home"></i>
                     </div>
                     <div class="login-mail">
-                        <input type="text" placeholder="Address Details" required="">
+                        <input type="text" value="${addressDetails}"required="" name="addressDetails">
                         <i  class="glyphicon glyphicon-home"></i>
                     </div>
                     <div class="login-mail">
-                        <input type="text" placeholder="Land Mark" required="">
+                        <input type="text" value="${landMark}" required="" name="landMark">
                         <i  class="glyphicon glyphicon-map-marker"></i>
                     </div>
                 </div>

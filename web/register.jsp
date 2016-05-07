@@ -1,24 +1,4 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @omima
- Unwatch 5
-  Star 0
-  Fork 0 repixels/The-Wanderer-Pack
- Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs
-Branch: login Find file Copy pathThe-Wanderer-Pack/web/register.jsp
-3ccfcd3  20 days ago
-@omima omima jsp file
-1 contributor
-RawBlameHistory     92 lines (85 sloc)  3.21 KB
-<%-- 
-    Document   : register
-    Created on : Apr 8, 2016, 1:57:38 PM
-    Author     : OMIMA
---%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,45 +15,76 @@ RawBlameHistory     92 lines (85 sloc)  3.21 KB
     </div>
     <!--login-->
     <div class="container">
-        <div class="login">
-            <form>
-                <div class="col-md-6 login-do">
-                    <div class="login-mail">
-                        <input type="text" placeholder="Name" required="">
-                        <i  class="glyphicon glyphicon-user"></i>
+         <div class="login">
+                <form action = "RegisterServlet">
+                    <div class="col-md-6 login-do">
+                        <!--<label>Your name can contain only characters and space</label>-->
+                        <div class="login-mail">
+                            <input type="text" placeholder="Name" required="" name = "Name" pattern="^[A-Za-z\s]+$">
+                            <i  class="glyphicon glyphicon-user"></i>
+                         
+                        </div>
+
+                           
+                        <div class="login-mail">
+                            <input type="text" placeholder="User Name" required="" name = "userName">
+                            <i  class="glyphicon glyphicon-user"></i>
+                        </div>
+                        <label id ="emailLabel" style="color: red"></label>
+                        <div class="login-mail">
+                            <input type ="email" placeholder="Email" required="" name = "email" id= "email" onblur="submitLoginForm()">
+                            <i  class="glyphicon glyphicon-envelope"></i>
+                        </div>
+                        <div class="login-mail">
+                            <input type="password" placeholder="Password" required="" name = "password">
+                            <i class="glyphicon glyphicon-lock"></i>
+                        </div>
+                        <div class="login-mail">
+                            <Label>Choose your Interests</label>
+                        </div>
+                        <div class="login-mail">
+                            <br/>   
+                            <a class="news-letter " href="#">
+                                <label class="checkbox1"><input type="checkbox" name="interests" value="Sport"><i> </i>Sport</label>
+                                <label class="checkbox1"><input type="checkbox" name="interests" value="Option2"><i> </i>Option2</label>
+                                <label class="checkbox1"><input type="checkbox" name="interests" value="Option3"><i> </i>Option3</label>
+                            </a>
+                        </div>
+                        <label class="hvr-skew-backward">
+                            <input type="submit" value="Register">
+                        </label>
                     </div>
-                    <div class="login-mail">
-                        <input type="text" placeholder="Phone Number" required="">
-                        <i  class="glyphicon glyphicon-phone"></i>
-                    </div>
-                    <div class="login-mail">
-                        <input type="text" placeholder="Email" required="">
-                        <i  class="glyphicon glyphicon-envelope"></i>
-                    </div>
-                    <div class="login-mail">
-                        <input type="password" placeholder="Password" required="">
-                        <i class="glyphicon glyphicon-lock"></i>
-                    </div>
-                    <a class="news-letter " href="#">
-                        <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
-                    </a>
-                    <label class="hvr-skew-backward">
-                        <input type="submit" value="Submit">
-                    </label>
+                    <div class="col-md-6 login-right">
+                         <!-- <label></label> -->
+                        <div class="login-mail">
+                            <input type="number" placeholder="Credit Number" required="" name = "creditNumber">
+                            <i  class="glyphicon glyphicon-usd"></i>
+                        </div>
+                        <div class="login-mail">
+                            <input type="text" placeholder="City" required="" name = "city">
+                            <i  class="glyphicon glyphicon-home"></i>
+                        </div>
+                        <br>
+                        <div class="login-mail">
+                            <input type="text" placeholder="Country" required="" name = "country">
+                             <i  class="glyphicon glyphicon-home"></i>
+                        </div>
+                        <div class="login-mail">
+                            <input type="text" placeholder="State" required="" name = "state">
+                            <i  class="glyphicon glyphicon-home"></i>
+                        </div>
 
-                </div>
-                <div class="col-md-6 login-right">
-                    <h3>Completely Free Account</h3>
+                        <div class="login-mail">
+                            <input type="text" placeholder="Address Details" required="" name = "addressDetails">
+                            <i  class="glyphicon glyphicon-home"></i>
+                        </div>
+                        <div class="login-mail">
+                            <input type="text" placeholder="Land Mark" required="" name = "landMark">
+                            <i  class="glyphicon glyphicon-map-marker"></i>
+                        </div>
 
-                    <p>Pellentesque neque leo, dictum sit amet accumsan non, dignissim ac mauris. Mauris rhoncus, lectus tincidunt tempus aliquam, odio 
-                        <a href="login.jsp" class="hvr-skew-backward">Login</a>
-
-                </div>
-
-                <div class="clearfix"> </div>
-            </form>
-        </div>
-
+                        <div class="clearfix"> </div>
+                </form>
     </div>
     <!--//login-->
     <!--brand-->
@@ -105,5 +116,3 @@ RawBlameHistory     92 lines (85 sloc)  3.21 KB
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
-Status API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Contact Help
