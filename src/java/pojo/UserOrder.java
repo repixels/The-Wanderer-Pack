@@ -62,12 +62,12 @@ public class UserOrder implements Serializable {
     @JoinTable(name = "order_has_user", joinColumns = {
         @JoinColumn(name = "order_id", referencedColumnName = "order_id")}, inverseJoinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
-    @ManyToMany
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<User> userList;
     @JoinTable(name = "order_has_product", joinColumns = {
         @JoinColumn(name = "order_id", referencedColumnName = "order_id")}, inverseJoinColumns = {
         @JoinColumn(name = "product_id", referencedColumnName = "product_id")})
-    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Product> productList;
 
     public UserOrder() {
