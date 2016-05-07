@@ -40,7 +40,7 @@
                             <label id="wrongMailLBL_id" style="color: red"/>
                         </div>
                     <label class="hvr-skew-backward">
-                        <input type="submit" value="login">
+                        <input type="submit" value="login" disabled>
                     </label>
                 </div>
                 <div class="col-md-6 login-right">

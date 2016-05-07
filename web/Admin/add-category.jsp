@@ -104,6 +104,20 @@
                                                 <span class="help-block">This is sample of text field</span>
                                             </div>
                                         </div>
+                                                
+                                        <div class="form-group">
+                                           <label class="col-md-3 col-xs-12 control-label">Choose a Parent Category</label>
+                                           <div class="col-md-6 col-xs-12">                                                                                            
+                                               <select class="form-control select" name="categories">
+                                                   <c:forEach  items="${requestScope.allCategories}" var="category" varStatus="i">
+                                                       <c:if test="${category.categoryParentId == null}">
+                                                            <option value="${category.categoryId}">${category.categorName}</option>    
+                                                       </c:if>
+                                                   </c:forEach>
+                                               </select>
+                                               <span class="help-block">Select box example</span>
+                                           </div>
+                                        </div>
 
                                         <div class="form-group">
                                             <label class="col-md-3 col-xs-12 control-label">Upload Category Image</label>

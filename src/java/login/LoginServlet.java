@@ -64,12 +64,13 @@ public class LoginServlet extends HttpServlet {
                 userRef = results.get(0);
                // out.println("the db name is :" + userRef.getUsername());
                 String pwdDB = userRef.getPassword();
+                String nameDB = userRef.getUsername();
 
                 if (pwdDB.equals(passStrLogin)) {
                     HttpSession httpSessionRef = request.getSession(true);
                     httpSessionRef.setAttribute("email", emailStrLogin);
-                  //  httpSessionRef.setAttribute("email", emailStrLogin);
-                     response.sendRedirect("index.html");
+                    httpSessionRef.setAttribute("userName", nameDB);
+                     response.sendRedirect("index.jsp");
 //                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.html");
 //                    dispatcher.forward(request, response);
                     out.print("okay");

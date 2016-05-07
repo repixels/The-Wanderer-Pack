@@ -1,13 +1,18 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package servlet;
 
+import dao.CategoryJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,10 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Salma Ashour
+ * @author Ehab
  */
-@WebServlet(name = "ConfirmMail", urlPatterns = {"/ConfirmMail"})
-public class ConfirmMail extends HttpServlet {
+@WebServlet(name = "Shop", urlPatterns = {"/Shop"})
+public class Shop extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,20 +37,20 @@ public class ConfirmMail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-        EntityManager em = emf.createEntityManager();
-        String email = request.getParameter("email");
-        Query query = em.createNamedQuery("User.findByEmail").setParameter("email", email);
-        
-        List result = query.getResultList();
-        if(!result.isEmpty()){
-         
-             out.print("This email is already Registered!");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+           
+            ServletContext servletContext = getServletContext();
+            
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
+            EntityManager em = emf.createEntityManager();
+            CategoryJpaController controller=new CategoryJpaController(emf);
+            List<pojo.Category> categories = controller.findCategoryEntities();
+            
+            servletContext.setAttribute("categories", categories);
+            
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
-        else
-            out.print("");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
