@@ -24,36 +24,41 @@
                 <h3>Your Contact Information</h3>
             </div>
         </div>
-        <div class="login">
-            <form>
-                <div class="col-md-6 login-do">
-                    <div class="login-mail">
-                        <i  class="glyphicon glyphicon-user"></i>
-                        <label>Name/ </label>
-                    </div>
-                    <div class="login-mail">
-                        <i  class="glyphicon glyphicon-phone"></i>
-                        <label>Phone Number/ </label>
-                    </div>
-                    <div class="login-mail">
-                        <i  class="glyphicon glyphicon-envelope"></i>
-                        <label>Email/ </label>
-                    </div>
-                    <div class="login-mail">
-                        <i class="glyphicon glyphicon-lock"></i>
-                        <label>Password/ </label>
-                    </div>
-                    <a href="login.jsp" class="hvr-skew-backward">Edit Info</a>
-                </div>
-                <div class="clearfix"> </div>
-                <!-- Order!//////////////////-->
-                <div class="container">
-
-
-                    <!-- Order!///////-->
-            </form>
-        </div>
-    </div>
+    <div class="login">
+		
+			<form action="EditProfileServlet">
+			<div class="col-md-6 login-do">
+			<div class="login-mail">
+					<!--<input type="text" placeholder="Name" required="">-->
+					<i  class="glyphicon glyphicon-user"></i>
+					<label>Name/ </label>
+					
+					
+				</div>
+				<div class="login-mail">
+					<!--input type="text" placeholder="Phone Number" required="">-->
+					<i  class="glyphicon glyphicon-phone"></i>
+					<label>Phone Number/ </label>
+				</div>
+				<div class="login-mail">
+					<!--<input type="text" placeholder="Email" required="">-->
+					<i  class="glyphicon glyphicon-envelope"></i>
+					<label>Email/ </label>
+				</div>
+				<div class="login-mail">
+					<!--<input type="password" placeholder="Password" required="">-->
+					<i class="glyphicon glyphicon-lock"></i>
+					<label>Password/ </label>
+				</div>
+				  				
+                           <label class="hvr-skew-backward">
+                            <a href="AccountEdit.jsp" class="hvr-skew-backward">Edit Info</a>
+                        </label>
+			</div>
+			
+			<div class="clearfix"> </div>
+			
+			<!-- Order!//////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
     <!--//login-->
     <!--brand-->
     <div class="container">
