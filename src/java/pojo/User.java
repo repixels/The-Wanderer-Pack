@@ -8,8 +8,10 @@ package pojo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +57,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_id")
     private Integer userId;
-    @ManyToMany(mappedBy = "userList")
+    @ManyToMany(mappedBy = "userList",cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<UserOrder> order1List;
     @ManyToMany(mappedBy = "userList")
     private List<Interest> interestList;

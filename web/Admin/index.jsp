@@ -28,11 +28,7 @@
                     </li>
                     <!-- END TOGGLE NAVIGATION -->
                     <!-- SEARCH -->
-                    <li class="xn-search">
-                        <form role="form">
-                            <input type="text" name="search" placeholder="Search..."/>
-                        </form>
-                    </li>   
+                    <%@include file="search.jsp" %>
                     <!-- END SEARCH -->
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
@@ -102,7 +98,8 @@
                                 <div class="widget-big-int plugin-clock">00:00</div>                            
                                 <div class="widget-subtitle plugin-date">Loading...</div>
                             </div>                        
-                            <!-- END WIDGET CLOCK -->
+                            <!-- END WIDGET CLOCK -->                     
+                            
                         </div>
                     </div>
                     <!-- END WIDGETS --> 
@@ -116,6 +113,9 @@
         
         <%@include file="scripts.jsp" %>
         <!-- THIS PAGE PLUGINS -->
+        
+        
+        
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
@@ -131,6 +131,8 @@
         
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+        
+       
         <!-- END PAGE PLUGINS -->
         
 
