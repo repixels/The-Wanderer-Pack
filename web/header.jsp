@@ -123,8 +123,7 @@
                                                     <div class="h_nav">
                                                         <h4>Submenu1</h4>
                                                         <ul>
-                                                            <li><a href="product.jsp">Accessories</a></li>
-                                                            <li><a href="product.jsp">Bags</a></li>
+                                                            <li><a href="/The_Wanderer_Pack/UserProduct">Accessories</a></li>
 
                                                         </ul>	
                                                     </div>							
