@@ -17,13 +17,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import pojo.Product;
 
 /**
  *
- * @author OMIMA
+ * @author omima
  */
-@WebServlet(name = "UserProduct", urlPatterns = {"/UserProduct"})
-public class UserProduct extends HttpServlet {
+@WebServlet(name = "SingleServlet", urlPatterns = {"/SingleServlet"})
+public class SingleServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,31 +40,24 @@ public class UserProduct extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
-            String prodctPrice = request.getParameter("price");
-            String prodctName = request.getParameter("name");
-            String prodctID = request.getParameter("id");
-
-           //  request.setAttribute(prodctID,);
-
+            
+            
+          int myProductId =Integer.parseInt(request.getParameter("id"));
+            
+          //object // get from db by id 
+          
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("The_Wanderer_PackPU");
-            EntityManager em = emf.createEntityManager();
-
-            ProductJpaController productController = new ProductJpaController(emf);
-          //  pojo.Product p=productController.findProduct(1);
-
-            request.setAttribute("Products", productController.findProductEntities());
-
-           // request.setAttribute("selectedProduct", productController.findProduct(Integer.SIZE));
            
-          // prodctName= p.getProductName();
-            //prodctPrice= (p.getProductPrice()).t oString();
-//             out.println("<h1> Done </h1>");
-            // out.print( productController.findProduct(1);
-            RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
-            rd.forward(request, response);
+            ProductJpaController controller=new ProductJpaController(emf);
+            
+            //Product product = controller.findProduct(myProductId);
+            
+          request.setAttribute("product",controller.findProduct(myProductId));
 
-            em.close();
+          RequestDispatcher rd = request.getRequestDispatcher("single.jsp");
+            rd.include(request, response);
+            
+            
         }
     }
 
