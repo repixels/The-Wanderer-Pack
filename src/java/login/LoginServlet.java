@@ -20,12 +20,14 @@ import pojo.User;
 import java.util.List;
 import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Deu
  */
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
 
     /**
