@@ -27,7 +27,11 @@
         <!--- start-rate---->
         <script src="js/jstarbox.js"></script>
         <link rel="stylesheet" href="css/jstarbox.css" type="text/css" media="screen" charset="utf-8" />
+        
+        
+        
         <script type="text/javascript">
+            
             jQuery(function () {
                 jQuery('.starbox').each(function () {
                     var starbox = jQuery(this);
@@ -46,6 +50,7 @@
                         }
                     })
                 });
+
             });
         </script>
         <!---//End-rate---->
@@ -53,7 +58,10 @@
     </head>
 
     <body>
-        <div class="header">
+        
+            <c:out value="${sessionScope.email}"/>
+           
+            
             <div class="container">
                 <div class="head">
                     <div class=" logo">
@@ -213,5 +221,5 @@
                 </div>	
             </div>
 
-        </div>
+        
 
